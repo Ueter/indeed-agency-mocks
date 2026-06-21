@@ -9,6 +9,8 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #1a1a1a; font-size: 13px; }
 .wrap { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+.nav-link { font-size: 12px; color: #2557a7; text-decoration: none; display: inline-block; margin-bottom: 16px; }
+.nav-link:hover { text-decoration: underline; }
 
 /* ヘッダー */
 .top-bar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 24px; }
@@ -38,6 +40,7 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color
 /* テーブル */
 .data-section { margin-bottom: 24px; }
 .data-section h2 { font-size: 13px; font-weight: 700; border-bottom: 1px solid #1a1a1a; padding-bottom: 6px; margin-bottom: 10px; }
+.table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
 th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; text-align: right; padding: 4px 8px; font-weight: 600; }
 th:first-child { text-align: left; }
@@ -63,6 +66,8 @@ tr:last-child td { border-bottom: none; }
 .bar { height: 4px; background: #eee; border-radius: 2px; margin-top: 8px; }
 .bar-fill { height: 4px; border-radius: 2px; background: #1a1a1a; }
 .client-alert { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 11px; color: #555; }
+.client-detail-link { display: inline-block; margin-top: 8px; font-size: 11px; color: #2557a7; text-decoration: none; font-weight: 600; }
+.client-detail-link:hover { text-decoration: underline; }
 
 /* アラート */
 .alerts { border: 1px solid #eee; border-radius: 4px; padding: 14px; }
@@ -73,10 +78,27 @@ tr:last-child td { border-bottom: none; }
 .dot-red { background: #c0392b; }
 .dot-yellow { background: #e67e22; }
 .dot-green { background: #1d7f3f; }
+
+/* アカウント詳細 */
+.account-detail { margin-bottom: 32px; padding-top: 20px; border-top: 2px solid #eee; }
+.account-detail h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.back-link { font-size: 12px; color: #2557a7; text-decoration: none; display: inline-block; margin-top: 12px; }
+.back-link:hover { text-decoration: underline; }
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .kpi-row { flex-direction: column; }
+  .kpi-box { border-right: none; border-bottom: 1px solid #ddd; }
+  .kpi-box:last-child { border-bottom: none; }
+  .charts { grid-template-columns: 1fr; }
+  .clients { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="top">
+
+<a href="index.html" class="nav-link">← モック一覧</a>
 
 <div class="top-bar">
   <div>
@@ -143,6 +165,7 @@ tr:last-child td { border-bottom: none; }
 <!-- 期間別テーブル -->
 <div class="data-section">
   <h2>期間別パフォーマンス</h2>
+  <div class="table-wrap">
   <table>
     <tr><th></th><th>費用消化</th><th>消化率</th><th>着地</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
     <tr><td>今日</td><td>¥82K</td><td>49%</td><td>¥164K</td><td>980</td><td>23</td><td>2.3%</td><td class="down">¥9,852</td></tr>
@@ -151,6 +174,7 @@ tr:last-child td { border-bottom: none; }
     <tr><td>四半期</td><td>¥9.2M</td><td>61%</td><td>¥14.8M</td><td>110K</td><td>2,580</td><td>2.3%</td><td class="down">¥9,640</td></tr>
     <tr><td>半期</td><td>¥18.4M</td><td>61%</td><td>¥29.6M</td><td>220K</td><td>5,160</td><td>2.3%</td><td class="down">¥9,580</td></tr>
   </table>
+  </div>
 </div>
 
 <!-- クライアント別 -->
@@ -170,6 +194,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="bar"><div class="bar-fill" style="width:66%"></div></div>
     <div class="client-alert"><span class="dot dot-green"></span> 全指標目標内</div>
+    <a href="#detail-etk" class="client-detail-link">詳細→</a>
   </div>
   <div class="client-card ok">
     <div class="client-header"><h4>ETK & Co. JBSA</h4><span class="status status-ok">順調</span></div>
@@ -183,6 +208,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="bar"><div class="bar-fill" style="width:54%"></div></div>
     <div class="client-alert"><span class="dot dot-green"></span> 全指標目標内</div>
+    <a href="#detail-jbsa" class="client-detail-link">詳細→</a>
   </div>
   <div class="client-card warn">
     <div class="client-header"><h4>ETK & Co. 人材紹介・派遣</h4><span class="status status-warn">要注意</span></div>
@@ -197,6 +223,7 @@ tr:last-child td { border-bottom: none; }
     <div class="bar"><div class="bar-fill" style="width:48%; background:#e67e22;"></div></div>
     <div class="client-alert"><span class="dot dot-red"></span> 着地¥800K（目標¥1M未達見込み）</div>
     <div class="client-alert"><span class="dot dot-red"></span> CVR 2.1%（目標2.5%下回り）→ CPA悪化</div>
+    <a href="#detail-jinzai" class="client-detail-link">詳細→</a>
   </div>
   <div class="client-card warn">
     <div class="client-header"><h4>ETK & Co. 直雇用</h4><span class="status status-warn">要注意</span></div>
@@ -210,28 +237,118 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="bar"><div class="bar-fill" style="width:47%; background:#e67e22;"></div></div>
     <div class="client-alert"><span class="dot dot-yellow"></span> 消化ペース遅れ（47% / 月半ば時点）</div>
+    <a href="#detail-choku" class="client-detail-link">詳細→</a>
   </div>
 </div>
 
+
+<!-- アカウント詳細 -->
+<div class="data-section"><h2>アカウント詳細</h2></div>
+
+<div class="account-detail" id="detail-etk">
+  <h3>ETK & Co.</h3>
+  <h4 style="font-size:12px;color:#555;margin-bottom:8px;">期間別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>W1 (6/1-7)</td><td>¥320K</td><td>1,120</td><td>32</td><td>2.9%</td><td>¥10,000</td></tr>
+    <tr><td>W2 (6/8-14)</td><td>¥380K</td><td>1,350</td><td>38</td><td>2.8%</td><td>¥10,000</td></tr>
+    <tr><td>W3 (6/15-20)</td><td>¥620K</td><td>2,330</td><td>64</td><td>2.7%</td><td>¥9,688</td></tr>
+  </table>
+  </div>
+  <h4 style="font-size:12px;color:#555;margin:12px 0 8px;">キャンペーン別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>キャンペーン</th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>営業職_東京</td><td>¥520K</td><td>1,900</td><td>56</td><td>2.9%</td><td>¥9,286</td></tr>
+    <tr><td>営業職_大阪</td><td>¥410K</td><td>1,500</td><td>42</td><td>2.8%</td><td>¥9,762</td></tr>
+    <tr><td>事務職_全国</td><td>¥390K</td><td>1,400</td><td>36</td><td>2.6%</td><td>¥10,833</td></tr>
+  </table>
+  </div>
+  <a href="#top" class="back-link">← トップに戻る</a>
+</div>
+
+<div class="account-detail" id="detail-jbsa">
+  <h3>ETK JBSA</h3>
+  <h4 style="font-size:12px;color:#555;margin-bottom:8px;">期間別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>W1 (6/1-7)</td><td>¥190K</td><td>740</td><td>21</td><td>2.8%</td><td>¥9,048</td></tr>
+    <tr><td>W2 (6/8-14)</td><td>¥250K</td><td>980</td><td>28</td><td>2.9%</td><td>¥8,929</td></tr>
+    <tr><td>W3 (6/15-20)</td><td>¥370K</td><td>1,480</td><td>40</td><td>2.7%</td><td>¥9,250</td></tr>
+  </table>
+  </div>
+  <h4 style="font-size:12px;color:#555;margin:12px 0 8px;">キャンペーン別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>キャンペーン</th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>介護職_関東</td><td>¥340K</td><td>1,350</td><td>39</td><td>2.9%</td><td>¥8,718</td></tr>
+    <tr><td>介護職_関西</td><td>¥280K</td><td>1,100</td><td>30</td><td>2.7%</td><td>¥9,333</td></tr>
+    <tr><td>看護師_全国</td><td>¥190K</td><td>750</td><td>20</td><td>2.7%</td><td>¥9,500</td></tr>
+  </table>
+  </div>
+  <a href="#top" class="back-link">← トップに戻る</a>
+</div>
+
+<div class="account-detail" id="detail-jinzai">
+  <h3>ETK 人材紹介・派遣</h3>
+  <h4 style="font-size:12px;color:#555;margin-bottom:8px;">期間別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>W1 (6/1-7)</td><td>¥110K</td><td>420</td><td>8</td><td>1.9%</td><td>¥13,750</td></tr>
+    <tr><td>W2 (6/8-14)</td><td>¥150K</td><td>580</td><td>12</td><td>2.1%</td><td>¥12,500</td></tr>
+    <tr><td>W3 (6/15-20)</td><td>¥220K</td><td>800</td><td>18</td><td>2.3%</td><td>¥12,222</td></tr>
+  </table>
+  </div>
+  <h4 style="font-size:12px;color:#555;margin:12px 0 8px;">キャンペーン別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>キャンペーン</th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>派遣_製造業</td><td>¥200K</td><td>750</td><td>14</td><td>1.9%</td><td>¥14,286</td></tr>
+    <tr><td>派遣_物流</td><td>¥160K</td><td>620</td><td>13</td><td>2.1%</td><td>¥12,308</td></tr>
+    <tr><td>紹介_IT</td><td>¥120K</td><td>430</td><td>11</td><td>2.6%</td><td>¥10,909</td></tr>
+  </table>
+  </div>
+  <a href="#top" class="back-link">← トップに戻る</a>
+</div>
+
+<div class="account-detail" id="detail-choku">
+  <h3>ETK 直雇用</h3>
+  <h4 style="font-size:12px;color:#555;margin-bottom:8px;">期間別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>W1 (6/1-7)</td><td>¥55K</td><td>250</td><td>7</td><td>2.8%</td><td>¥7,857</td></tr>
+    <tr><td>W2 (6/8-14)</td><td>¥78K</td><td>360</td><td>9</td><td>2.5%</td><td>¥8,667</td></tr>
+    <tr><td>W3 (6/15-20)</td><td>¥104K</td><td>490</td><td>12</td><td>2.4%</td><td>¥8,667</td></tr>
+  </table>
+  </div>
+  <h4 style="font-size:12px;color:#555;margin:12px 0 8px;">キャンペーン別データ</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>キャンペーン</th><th>費用</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>飲食_東京</td><td>¥98K</td><td>460</td><td>12</td><td>2.6%</td><td>¥8,167</td></tr>
+    <tr><td>小売_関東</td><td>¥82K</td><td>380</td><td>10</td><td>2.6%</td><td>¥8,200</td></tr>
+    <tr><td>清掃_全国</td><td>¥57K</td><td>260</td><td>6</td><td>2.3%</td><td>¥9,500</td></tr>
+  </table>
+  </div>
+  <a href="#top" class="back-link">← トップに戻る</a>
+</div>
+
 </div><!-- /wrap -->
+
 
 <script>
 const days = Array.from({length:20}, (_,i) => `6/${i+1}`);
 const costData = [140,155,148,162,170,145,130,158,175,168,182,190,155,148,165,172,180,160,152,164];
 
-// 各社クリックデータ
 const clickETK = [600,650,620,700,720,610,560,680,740,710,770,800,650,620,700,730,760,680,650,700];
 const clickJBSA = [400,440,420,460,480,410,370,450,490,470,510,530,440,420,460,480,500,450,430,460];
 const clickJinzai = [300,330,320,340,360,310,280,330,370,360,380,400,330,320,340,360,380,340,320,350];
 const clickChoku = [200,230,220,220,240,220,190,220,250,240,260,270,230,220,250,250,260,230,220,240];
 
-// 各社応募データ
-const applyETK = [14,17,15,18,19,15,13,18,20,18,21,22,17,15,18,19,20,18,16,18];
-const applyJBSA = [10,12,11,12,13,10,9,12,14,13,14,15,12,11,13,13,14,12,11,13];
-const applyJinzai = [6,7,6,8,8,6,5,7,8,8,9,9,7,6,8,8,9,7,6,8];
-const applyChoku = [5,6,6,7,8,6,5,7,8,7,8,9,6,6,7,8,8,7,7,7];
-
-// 各社CPAデータ
 const cpaETK = [9500,9200,9400,9100,9000,9400,9700,9100,8900,9100,8800,8700,9200,9400,9100,9000,8900,9100,9200,9851];
 const cpaJBSA = [9800,9500,9700,9400,9300,9700,10000,9400,9200,9400,9100,9000,9500,9700,9400,9300,9200,9400,9500,9101];
 const cpaJinzai = [12000,11800,12200,11500,11400,12000,12500,11600,11200,11500,11000,10900,11800,12000,11500,11400,11200,11600,11800,12632];

@@ -9,7 +9,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--primary:#2557a7;--bg:#f4f6f8;--card:#fff;--text:#1a1a2e;--gray:#6b7280;--border:#e5e7eb}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-.sidebar{width:240px;background:var(--primary);color:#fff;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.back-link{position:fixed;top:0;left:0;right:0;background:#fff;padding:8px 16px;font-size:13px;border-bottom:1px solid var(--border);z-index:300}
+.back-link a{color:var(--primary);text-decoration:none}
+.back-link a:hover{text-decoration:underline}
+.sidebar{width:240px;background:var(--primary);color:#fff;padding:20px 0;position:fixed;top:37px;height:calc(100vh - 37px);overflow-y:auto;z-index:100}
 .sidebar h2{padding:0 20px 20px;font-size:14px;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:12px}
 .sidebar label{display:block;padding:4px 20px;font-size:11px;color:rgba(255,255,255,.7);margin-top:12px}
 .sidebar select,.sidebar button{width:calc(100% - 40px);margin:4px 20px;padding:8px;border-radius:4px;border:none;font-size:13px}
@@ -17,13 +20,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sidebar select option{color:#000}
 .sidebar .nav-item{display:block;padding:10px 20px;color:#fff;text-decoration:none;font-size:13px;border-left:3px solid transparent}
 .sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(255,255,255,.1);border-left-color:#fff}
-.main{margin-left:240px;flex:1;padding:24px;max-width:1200px}
+.main{margin-left:240px;flex:1;padding:24px;padding-top:61px;max-width:1200px}
 .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .header h1{font-size:22px;color:var(--primary)}
 .meta{font-size:12px;color:var(--gray);margin-bottom:20px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.filters button{padding:6px 14px;border:1px solid var(--border);border-radius:16px;background:#fff;cursor:pointer;font-size:12px}
+.filter-group{margin-bottom:16px}
+.filter-group .filter-label{font-size:11px;color:var(--gray);margin-bottom:6px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{padding:6px 14px;border:1px solid var(--border);border-radius:16px;background:#fff;cursor:pointer;font-size:12px;transition:all .15s}
 .filters button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.filters button:hover:not(.active){background:#f0f4ff}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
 .kpi-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);position:relative}
 .kpi-card .label{font-size:12px;color:var(--gray)}
@@ -34,40 +40,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .kpi-card .change{font-size:12px}
 .kpi-card .change.up{color:#10b981}
 .kpi-card .change.down{color:#ef4444}
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:16px}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:16px;margin-bottom:24px}
 .chart-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .chart-card h3{font-size:14px;margin-bottom:12px;color:var(--text)}
 canvas{width:100%!important;height:250px!important}
-.hamburger{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--primary);color:#fff;border:none;border-radius:4px;padding:8px 12px;cursor:pointer;font-size:18px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-wrap table{width:100%;min-width:600px;border-collapse:collapse;font-size:13px}
+.table-wrap th,.table-wrap td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.table-wrap th{background:var(--bg);font-weight:600;font-size:12px;color:var(--gray)}
+.hamburger{display:none;position:fixed;top:45px;left:12px;z-index:200;background:var(--primary);color:#fff;border:none;border-radius:4px;padding:8px 12px;cursor:pointer;font-size:18px}
 @media(max-width:768px){
  .sidebar{transform:translateX(-100%);transition:transform .3s}
  .sidebar.open{transform:translateX(0)}
  .main{margin-left:0}
  .hamburger{display:block}
  .charts-grid{grid-template-columns:1fr}
+ .kpi-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
+<div class="back-link"><a href="index.html">← モック一覧</a></div>
 <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
 <aside class="sidebar">
 <h2>Indeed 広告運用管理</h2>
-<label>アカウント</label>
-<select id="accountSelect">
- <option>全アカウント</option>
- <option>ETK &amp; Co.</option>
- <option>ETK JBSA</option>
- <option>ETK 人材紹介・派遣</option>
- <option>ETK 直雇用</option>
-</select>
-<label>期間</label>
-<select id="periodSelect">
- <option>今月</option>
- <option>今日</option>
- <option>今週</option>
- <option>四半期</option>
- <option>半期</option>
-</select>
 <a class="nav-item active" href="#">📊 ダッシュボード</a>
 <a class="nav-item" href="#">📋 キャンペーン一覧</a>
 <a class="nav-item" href="#">📈 レポート</a>
@@ -80,8 +76,17 @@ canvas{width:100%!important;height:250px!important}
 </div>
 <p class="meta">集計期間: 2026/06/01 〜 2026/06/21 ｜ 最終更新: 2026/06/21 14:30</p>
 
-<div class="filters">
- <button>今日</button><button>今週</button><button class="active">今月</button><button>四半期</button><button>半期</button>
+<div class="filter-group">
+ <div class="filter-label">期間</div>
+ <div class="filters" id="periodFilters">
+  <button>今日</button><button>今週</button><button class="active">今月</button><button>四半期</button><button>半期</button>
+ </div>
+</div>
+<div class="filter-group">
+ <div class="filter-label">アカウント</div>
+ <div class="filters" id="accountFilters">
+  <button class="active">全体</button><button>ETK</button><button>JBSA</button><button>人材紹介・派遣</button><button>直雇用</button>
+ </div>
 </div>
 
 <div class="kpi-grid">
@@ -126,7 +131,18 @@ canvas{width:100%!important;height:250px!important}
 </main>
 
 <script>
-const labels = Array.from({length:21},(_,i)=>`6/${i+1}`);
+// Filter toggle
+document.querySelectorAll('.filters').forEach(group=>{
+ group.addEventListener('click',e=>{
+  if(e.target.tagName==='BUTTON'){
+   group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+   e.target.classList.add('active');
+  }
+ });
+});
+
+// Charts
+const labels=Array.from({length:21},(_,i)=>`6/${i+1}`);
 const rand=(min,max,n)=>Array.from({length:n},()=>Math.floor(Math.random()*(max-min)+min));
 const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
 const clients=['ETK & Co.','ETK JBSA','ETK 人材紹介・派遣','ETK 直雇用'];
