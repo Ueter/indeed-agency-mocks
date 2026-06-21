@@ -53,6 +53,14 @@ tr:hover td{background:#1e2a4a}
 .dot-red{background:#e74c3c}
 .dot-yellow{background:#e67e22}
 .dot-green{background:#27ae60}
+@media(max-width:768px){
+.charts{grid-template-columns:1fr}
+.kpi-row{flex-wrap:wrap;display:grid;grid-template-columns:1fr 1fr}
+.kpi-box{border-right:none;border-bottom:1px solid #2a2a4a}
+.clients{grid-template-columns:1fr}
+canvas{max-width:100%;height:auto!important}
+table{display:block;overflow-x:auto;white-space:nowrap}
+}
 </style>
 </head>
 <body>

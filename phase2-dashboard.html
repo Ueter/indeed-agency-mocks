@@ -7,17 +7,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--primary:#2557a7;--bg:#f4f6f8;--card:#fff;--text:#1a1a2e;--gray:#6b7280;--border:#e5e7eb}
+:root{--primary:#2557a7;--bg:#f4f6f8;--card:#fff;--text:#1a1a2e;--gray:#6b7280;--border:#e5e7eb;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
 .back-link{position:fixed;top:0;left:0;right:0;background:#fff;padding:8px 16px;font-size:13px;border-bottom:1px solid var(--border);z-index:300}
 .back-link a{color:var(--primary);text-decoration:none}
 .back-link a:hover{text-decoration:underline}
 .sidebar{width:240px;background:var(--primary);color:#fff;padding:20px 0;position:fixed;top:37px;height:calc(100vh - 37px);overflow-y:auto;z-index:100}
 .sidebar h2{padding:0 20px 20px;font-size:14px;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:12px}
-.sidebar label{display:block;padding:4px 20px;font-size:11px;color:rgba(255,255,255,.7);margin-top:12px}
-.sidebar select,.sidebar button{width:calc(100% - 40px);margin:4px 20px;padding:8px;border-radius:4px;border:none;font-size:13px}
-.sidebar select{background:rgba(255,255,255,.15);color:#fff}
-.sidebar select option{color:#000}
 .sidebar .nav-item{display:block;padding:10px 20px;color:#fff;text-decoration:none;font-size:13px;border-left:3px solid transparent}
 .sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(255,255,255,.1);border-left-color:#fff}
 .main{margin-left:240px;flex:1;padding:24px;padding-top:61px;max-width:1200px}
@@ -31,23 +27,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .filters button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .filters button:hover:not(.active){background:#f0f4ff}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.kpi-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);position:relative}
+.kpi-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .kpi-card .label{font-size:12px;color:var(--gray)}
 .kpi-card .value{font-size:26px;font-weight:700;margin:4px 0}
-.kpi-card .target{font-size:11px;color:var(--gray);display:flex;align-items:center;gap:4px}
-.kpi-card .edit-icon{cursor:pointer;opacity:.5;font-size:12px}
-.kpi-card .edit-icon:hover{opacity:1}
 .kpi-card .change{font-size:12px}
-.kpi-card .change.up{color:#10b981}
-.kpi-card .change.down{color:#ef4444}
+.kpi-card .change.up{color:var(--success)}
+.kpi-card .change.down{color:var(--danger)}
 .charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:16px;margin-bottom:24px}
 .chart-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .chart-card h3{font-size:14px;margin-bottom:12px;color:var(--text)}
 canvas{width:100%!important;height:250px!important}
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.table-wrap table{width:100%;min-width:600px;border-collapse:collapse;font-size:13px}
-.table-wrap th,.table-wrap td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
-.table-wrap th{background:var(--bg);font-weight:600;font-size:12px;color:var(--gray)}
+.company-section{margin-bottom:24px}
+.company-section h3{font-size:16px;margin-bottom:12px;color:var(--text)}
+.company-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.company-table th,.company-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.company-table th{background:var(--bg);font-weight:600;font-size:12px;color:var(--gray);cursor:pointer;user-select:none}
+.company-table th:hover{color:var(--primary)}
+.company-table tr:last-child td{border-bottom:none}
+.company-table tbody tr{cursor:pointer;transition:background .15s}
+.company-table tbody tr:hover{background:#f0f4ff}
+.status-badge{padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.status-badge.ok{background:#d1fae5;color:#065f46}
+.status-badge.warn{background:#fef3c7;color:#92400e}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:400;display:none;opacity:0;transition:opacity .3s}
+.overlay.show{display:block;opacity:1}
+.drill-panel{position:fixed;top:37px;right:0;width:600px;max-width:90vw;height:calc(100vh - 37px);background:#fff;z-index:500;overflow-y:auto;box-shadow:-4px 0 20px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .3s ease;padding:24px}
+.drill-panel.show{transform:translateX(0)}
+.drill-panel .close-btn{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--gray);line-height:1}
+.drill-panel .close-btn:hover{color:var(--text)}
+.drill-panel h2{font-size:18px;margin-bottom:16px;color:var(--primary)}
+.drill-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.drill-kpi{background:var(--bg);border-radius:6px;padding:12px;text-align:center}
+.drill-kpi .lbl{font-size:11px;color:var(--gray)}
+.drill-kpi .val{font-size:20px;font-weight:700;margin-top:4px}
+.drill-chart{margin-bottom:20px}
+.drill-chart canvas{height:180px!important}
+.drill-table{width:100%;border-collapse:collapse;font-size:12px}
+.drill-table th,.drill-table td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.drill-table th{background:var(--bg);font-weight:600;color:var(--gray)}
 .hamburger{display:none;position:fixed;top:45px;left:12px;z-index:200;background:var(--primary);color:#fff;border:none;border-radius:4px;padding:8px 12px;cursor:pointer;font-size:18px}
 @media(max-width:768px){
  .sidebar{transform:translateX(-100%);transition:transform .3s}
@@ -56,6 +73,7 @@ canvas{width:100%!important;height:250px!important}
  .hamburger{display:block}
  .charts-grid{grid-template-columns:1fr}
  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+ .drill-panel{width:100vw}
 }
 </style>
 </head>
@@ -71,10 +89,8 @@ canvas{width:100%!important;height:250px!important}
 </aside>
 
 <main class="main">
-<div class="header">
- <h1>ポートフォリオ ダッシュボード</h1>
-</div>
-<p class="meta">集計期間: 2026/06/01 〜 2026/06/21 ｜ 最終更新: 2026/06/21 14:30</p>
+<div class="header"><h1>ポートフォリオ ダッシュボード</h1></div>
+<p class="meta">集計期間: 2026/06/01 〜 2026/06/21 ｜ 最終更新: 2026/06/22 08:00</p>
 
 <div class="filter-group">
  <div class="filter-label">期間</div>
@@ -89,73 +105,237 @@ canvas{width:100%!important;height:250px!important}
  </div>
 </div>
 
-<div class="kpi-grid">
- <div class="kpi-card">
-  <div class="label">総費用</div>
-  <div class="value">¥1,284,500</div>
-  <span class="change up">▲ 12% 前月比</span>
-  <div class="target">目標: ¥1,500,000 <span class="edit-icon" title="目標編集">✏️</span></div>
- </div>
- <div class="kpi-card">
-  <div class="label">総クリック</div>
-  <div class="value">8,432</div>
-  <span class="change up">▲ 8% 前月比</span>
-  <div class="target">目標: 10,000 <span class="edit-icon" title="目標編集">✏️</span></div>
- </div>
- <div class="kpi-card">
-  <div class="label">総応募数</div>
-  <div class="value">312</div>
-  <span class="change up">▲ 15% 前月比</span>
-  <div class="target">目標: 400 <span class="edit-icon" title="目標編集">✏️</span></div>
- </div>
- <div class="kpi-card">
-  <div class="label">平均CPA</div>
-  <div class="value">¥4,117</div>
-  <span class="change down">▼ 5% 前月比</span>
-  <div class="target">目標: ¥3,500 <span class="edit-icon" title="目標編集">✏️</span></div>
- </div>
- <div class="kpi-card">
-  <div class="label">平均CTR</div>
-  <div class="value">3.2%</div>
-  <span class="change up">▲ 0.3pt</span>
-  <div class="target">目標: 3.5% <span class="edit-icon" title="目標編集">✏️</span></div>
- </div>
-</div>
-
+<div class="kpi-grid" id="kpiGrid"></div>
 <div class="charts-grid">
  <div class="chart-card"><h3>費用推移（日別）</h3><canvas id="chartCost"></canvas></div>
  <div class="chart-card"><h3>クリック推移（日別）</h3><canvas id="chartClicks"></canvas></div>
  <div class="chart-card"><h3>応募推移（日別）</h3><canvas id="chartApply"></canvas></div>
  <div class="chart-card"><h3>CPA推移（日別）</h3><canvas id="chartCPA"></canvas></div>
 </div>
+
+<div class="company-section">
+ <h3>企業別パフォーマンス</h3>
+ <table class="company-table" id="companyTable">
+  <thead><tr><th data-sort="name">企業名</th><th data-sort="cost">費用</th><th data-sort="clicks">クリック</th><th data-sort="applies">応募</th><th data-sort="cvr">CVR</th><th data-sort="cpa">CPA</th><th data-sort="status">ステータス</th></tr></thead>
+  <tbody id="companyBody"></tbody>
+ </table>
+</div>
 </main>
 
+<div class="overlay" id="overlay"></div>
+<div class="drill-panel" id="drillPanel">
+ <button class="close-btn" id="closePanel">&times;</button>
+ <h2 id="drillTitle"></h2>
+ <div class="drill-kpis" id="drillKpis"></div>
+ <div class="drill-chart"><canvas id="drillChart"></canvas></div>
+ <h4 style="margin-bottom:8px;font-size:13px;color:var(--gray)">求人別パフォーマンス</h4>
+ <table class="drill-table">
+  <thead><tr><th>求人名</th><th>費用</th><th>クリック</th><th>応募</th><th>CPA</th></tr></thead>
+  <tbody id="drillJobs"></tbody>
+ </table>
+</div>
+
 <script>
-// Filter toggle
-document.querySelectorAll('.filters').forEach(group=>{
- group.addEventListener('click',e=>{
-  if(e.target.tagName==='BUTTON'){
-   group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-   e.target.classList.add('active');
-  }
- });
-});
+// ===== DATA STORE =====
+const COMPANIES = [
+  {id:'etk', name:'ETK & Co.', cost:1320000, clicks:4800, applies:134, cvr:2.8, cpa:9851, status:'順調',
+   jobs:[
+    {name:'営業マネージャー（東京）',cost:380000,clicks:1400,applies:42,cpa:9048},
+    {name:'カスタマーサポート（大阪）',cost:290000,clicks:1100,applies:35,cpa:8286},
+    {name:'Webエンジニア（リモート）',cost:350000,clicks:1200,applies:32,cpa:10938},
+    {name:'人事担当（東京）',cost:180000,clicks:700,applies:15,cpa:12000},
+    {name:'経理スタッフ（名古屋）',cost:120000,clicks:400,applies:10,cpa:12000}
+   ]},
+  {id:'jbsa', name:'ETK JBSA', cost:810000, clicks:3200, applies:89, cvr:2.8, cpa:9101, status:'順調',
+   jobs:[
+    {name:'施工管理（関東）',cost:250000,clicks:1000,applies:30,cpa:8333},
+    {name:'電気工事士（東京）',cost:220000,clicks:850,applies:25,cpa:8800},
+    {name:'現場監督（神奈川）',cost:190000,clicks:750,applies:20,cpa:9500},
+    {name:'CADオペレーター（大阪）',cost:150000,clicks:600,applies:14,cpa:10714}
+   ]},
+  {id:'haken', name:'ETK 人材紹介・派遣', cost:480000, clicks:1800, applies:38, cvr:2.1, cpa:12632, status:'要注意',
+   jobs:[
+    {name:'派遣コーディネーター（東京）',cost:160000,clicks:600,applies:12,cpa:13333},
+    {name:'キャリアアドバイザー（大阪）',cost:140000,clicks:520,applies:10,cpa:14000},
+    {name:'法人営業（東京）',cost:100000,clicks:400,applies:9,cpa:11111},
+    {name:'事務スタッフ（横浜）',cost:80000,clicks:280,applies:7,cpa:11429}
+   ]},
+  {id:'direct', name:'ETK 直雇用', cost:237000, clicks:1100, applies:28, cvr:2.5, cpa:8464, status:'要注意',
+   jobs:[
+    {name:'店舗スタッフ（都内）',cost:80000,clicks:380,applies:10,cpa:8000},
+    {name:'配送ドライバー（千葉）',cost:65000,clicks:300,applies:8,cpa:8125},
+    {name:'倉庫作業員（埼玉）',cost:52000,clicks:250,applies:6,cpa:8667},
+    {name:'清掃スタッフ（東京）',cost:40000,clicks:170,applies:4,cpa:10000}
+   ]}
+];
 
-// Charts
-const labels=Array.from({length:21},(_,i)=>`6/${i+1}`);
-const rand=(min,max,n)=>Array.from({length:n},()=>Math.floor(Math.random()*(max-min)+min));
-const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
-const clients=['ETK & Co.','ETK JBSA','ETK 人材紹介・派遣','ETK 直雇用'];
-const colors=['#2557a7','#f59e0b','#10b981','#8b5cf6'];
+// KPI data per period x account
+function buildKPI(cost,clicks,applies,cpa,ctr,costChg,clickChg,applyChg,cpaChg,ctrChg){
+  return {cost,clicks,applies,cpa,ctr,costChg,clickChg,applyChg,cpaChg,ctrChg};
+}
+const DATA = {
+  '今日_全体': buildKPI(142000,520,14,10143,3.1,5,3,8,-2,0.1),
+  '今日_ETK': buildKPI(68000,250,7,9714,3.2,6,4,10,-3,0.2),
+  '今日_JBSA': buildKPI(42000,160,4,10500,2.9,4,2,5,-1,0.1),
+  '今日_人材紹介・派遣': buildKPI(21000,70,2,10500,2.0,3,1,0,2,-0.1),
+  '今日_直雇用': buildKPI(11000,40,1,11000,2.4,2,1,0,5,0.0),
+  '今週_全体': buildKPI(680000,2400,68,10000,3.2,8,6,12,-3,0.2),
+  '今週_ETK': buildKPI(320000,1150,34,9412,3.3,9,7,14,-4,0.3),
+  '今週_JBSA': buildKPI(195000,750,20,9750,2.9,7,5,10,-2,0.1),
+  '今週_人材紹介・派遣': buildKPI(110000,350,9,12222,2.1,5,3,6,1,-0.1),
+  '今週_直雇用': buildKPI(55000,150,5,11000,2.5,4,2,4,2,0.0),
+  '今月_全体': buildKPI(2847000,10900,289,9851,3.2,12,8,15,-5,0.3),
+  '今月_ETK': buildKPI(1320000,4800,134,9851,3.3,14,10,18,-6,0.4),
+  '今月_JBSA': buildKPI(810000,3200,89,9101,2.8,10,7,13,-4,0.2),
+  '今月_人材紹介・派遣': buildKPI(480000,1800,38,12632,2.1,8,5,8,2,-0.1),
+  '今月_直雇用': buildKPI(237000,1100,28,8464,2.5,6,4,10,-3,0.1),
+  '四半期_全体': buildKPI(8200000,31500,845,9704,3.1,10,7,13,-4,0.2),
+  '四半期_ETK': buildKPI(3800000,14200,392,9694,3.2,12,8,15,-5,0.3),
+  '四半期_JBSA': buildKPI(2350000,9400,258,9109,2.8,9,6,12,-3,0.2),
+  '四半期_人材紹介・派遣': buildKPI(1350000,5200,112,12054,2.1,7,5,8,1,-0.1),
+  '四半期_直雇用': buildKPI(700000,2700,83,8434,2.6,6,4,9,-2,0.1),
+  '半期_全体': buildKPI(16500000,63000,1680,9821,3.0,8,6,11,-3,0.2),
+  '半期_ETK': buildKPI(7600000,28500,780,9744,3.1,9,7,12,-4,0.3),
+  '半期_JBSA': buildKPI(4700000,18800,515,9126,2.8,7,5,10,-3,0.2),
+  '半期_人材紹介・派遣': buildKPI(2800000,10500,225,12444,2.1,6,4,7,1,-0.1),
+  '半期_直雇用': buildKPI(1400000,5200,160,8750,2.5,5,3,8,-2,0.1)
+};
 
-function makeDatasets(min,max){
- return clients.map((c,i)=>({label:c,data:rand(min,max,21),borderColor:colors[i],backgroundColor:colors[i]+'20',borderWidth:2,tension:.3,fill:true,pointRadius:0}));
+// Chart data per period (day labels and series length)
+const PERIOD_DAYS = {'今日':['8時','9時','10時','11時','12時','13時','14時'],'今週':['月','火','水','木','金','土','日'],'今月':Array.from({length:21},(_,i)=>`6/${i+1}`),'四半期':['4月','5月','6月'],'半期':['1月','2月','3月','4月','5月','6月']};
+
+function genSeries(base,len,variance){
+  return Array.from({length:len},()=>Math.round(base+((Math.random()-0.5)*2*variance)));
 }
 
-new Chart(document.getElementById('chartCost'),{type:'line',data:{labels,datasets:makeDatasets(10000,30000)},options:opts});
-new Chart(document.getElementById('chartClicks'),{type:'line',data:{labels,datasets:makeDatasets(50,200)},options:opts});
-new Chart(document.getElementById('chartApply'),{type:'line',data:{labels,datasets:makeDatasets(2,20)},options:opts});
-new Chart(document.getElementById('chartCPA'),{type:'line',data:{labels,datasets:makeDatasets(2500,6000)},options:opts});
+// ===== STATE =====
+let currentPeriod='今月', currentAccount='全体';
+const colors=['#2557a7','#f59e0b','#10b981','#8b5cf6'];
+let charts={cost:null,clicks:null,apply:null,cpa:null};
+let drillChartInstance=null;
+
+// ===== RENDER KPIs =====
+function renderKPIs(){
+  const key=`${currentPeriod}_${currentAccount}`;
+  const d=DATA[key];if(!d)return;
+  const fmt=v=>v>=1000000?'¥'+(v/10000).toFixed(0)+'万':'¥'+v.toLocaleString();
+  const grid=document.getElementById('kpiGrid');
+  grid.innerHTML=`
+    <div class="kpi-card"><div class="label">総費用</div><div class="value">${fmt(d.cost)}</div><span class="change ${d.costChg>=0?'up':'down'}">${d.costChg>=0?'▲':'▼'} ${Math.abs(d.costChg)}% 前期比</span></div>
+    <div class="kpi-card"><div class="label">総クリック</div><div class="value">${d.clicks.toLocaleString()}</div><span class="change ${d.clickChg>=0?'up':'down'}">${d.clickChg>=0?'▲':'▼'} ${Math.abs(d.clickChg)}% 前期比</span></div>
+    <div class="kpi-card"><div class="label">総応募数</div><div class="value">${d.applies.toLocaleString()}</div><span class="change ${d.applyChg>=0?'up':'down'}">${d.applyChg>=0?'▲':'▼'} ${Math.abs(d.applyChg)}% 前期比</span></div>
+    <div class="kpi-card"><div class="label">平均CPA</div><div class="value">¥${d.cpa.toLocaleString()}</div><span class="change ${d.cpaChg<=0?'up':'down'}">${d.cpaChg<=0?'▼':'▲'} ${Math.abs(d.cpaChg)}% 前期比</span></div>
+    <div class="kpi-card"><div class="label">平均CTR</div><div class="value">${d.ctr}%</div><span class="change ${d.ctrChg>=0?'up':'down'}">${d.ctrChg>=0?'▲':'▼'} ${Math.abs(d.ctrChg)}pt</span></div>`;
+}
+
+// ===== RENDER CHARTS =====
+function renderCharts(){
+  const labels=PERIOD_DAYS[currentPeriod];
+  const len=labels.length;
+  const key=`${currentPeriod}_${currentAccount}`;
+  const d=DATA[key];if(!d)return;
+  const costBase=d.cost/len, clickBase=d.clicks/len, applyBase=d.applies/len, cpaBase=d.cpa;
+
+  function makeDS(base,variance,singleLabel){
+    if(currentAccount==='全体'){
+      return COMPANIES.map((c,i)=>({label:c.name,data:genSeries(base*(c.cost/d.cost||0.25),len,variance*(c.cost/d.cost||0.25)),borderColor:colors[i],backgroundColor:colors[i]+'20',borderWidth:2,tension:.3,fill:true,pointRadius:0}));
+    }
+    return [{label:singleLabel||currentAccount,data:genSeries(base,len,variance),borderColor:colors[0],backgroundColor:colors[0]+'20',borderWidth:2,tension:.3,fill:true,pointRadius:0}];
+  }
+
+  const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:currentAccount==='全体',position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
+
+  function updateChart(key,canvasId,datasets){
+    if(charts[key]){charts[key].destroy();}
+    charts[key]=new Chart(document.getElementById(canvasId),{type:'line',data:{labels,datasets},options:opts});
+  }
+  updateChart('cost','chartCost',makeDS(costBase,costBase*0.3,'費用'));
+  updateChart('clicks','chartClicks',makeDS(clickBase,clickBase*0.3,'クリック'));
+  updateChart('apply','chartApply',makeDS(applyBase,applyBase*0.4,'応募'));
+  updateChart('cpa','chartCPA',makeDS(cpaBase,cpaBase*0.2,'CPA'));
+}
+
+// ===== RENDER COMPANY TABLE =====
+let sortCol='cost', sortAsc=false;
+function renderCompanyTable(){
+  const tbody=document.getElementById('companyBody');
+  const sorted=[...COMPANIES].sort((a,b)=>{
+    let va=a[sortCol],vb=b[sortCol];
+    if(sortCol==='name'||sortCol==='status')return sortAsc?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
+    return sortAsc?va-vb:vb-va;
+  });
+  tbody.innerHTML=sorted.map(c=>`<tr data-id="${c.id}">
+    <td><strong>${c.name}</strong></td>
+    <td>¥${c.cost.toLocaleString()}</td>
+    <td>${c.clicks.toLocaleString()}</td>
+    <td>${c.applies}</td>
+    <td>${c.cvr}%</td>
+    <td>¥${c.cpa.toLocaleString()}</td>
+    <td><span class="status-badge ${c.status==='順調'?'ok':'warn'}">${c.status}</span></td>
+  </tr>`).join('');
+}
+
+// Sort handler
+document.querySelector('#companyTable thead').addEventListener('click',e=>{
+  const th=e.target.closest('th');if(!th)return;
+  const col=th.dataset.sort;
+  if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=false;}
+  renderCompanyTable();
+});
+
+// ===== DRILL-DOWN PANEL =====
+function openDrill(companyId){
+  const c=COMPANIES.find(x=>x.id===companyId);if(!c)return;
+  document.getElementById('drillTitle').textContent=c.name;
+  document.getElementById('drillKpis').innerHTML=`
+    <div class="drill-kpi"><div class="lbl">費用</div><div class="val">¥${c.cost.toLocaleString()}</div></div>
+    <div class="drill-kpi"><div class="lbl">クリック</div><div class="val">${c.clicks.toLocaleString()}</div></div>
+    <div class="drill-kpi"><div class="lbl">応募</div><div class="val">${c.applies}</div></div>
+    <div class="drill-kpi"><div class="lbl">CVR</div><div class="val">${c.cvr}%</div></div>
+    <div class="drill-kpi"><div class="lbl">CPA</div><div class="val">¥${c.cpa.toLocaleString()}</div></div>
+    <div class="drill-kpi"><div class="lbl">ステータス</div><div class="val">${c.status}</div></div>`;
+  // Mini chart
+  const labels=Array.from({length:21},(_,i)=>`6/${i+1}`);
+  if(drillChartInstance)drillChartInstance.destroy();
+  drillChartInstance=new Chart(document.getElementById('drillChart'),{type:'line',data:{labels,datasets:[
+    {label:'費用',data:genSeries(c.cost/21,21,c.cost/21*0.3),borderColor:'#2557a7',backgroundColor:'#2557a720',borderWidth:2,tension:.3,fill:true,pointRadius:0,yAxisID:'y'},
+    {label:'応募',data:genSeries(c.applies/21,21,c.applies/21*0.5),borderColor:'#10b981',backgroundColor:'#10b98120',borderWidth:2,tension:.3,fill:true,pointRadius:0,yAxisID:'y1'}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{position:'left',beginAtZero:true},y1:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+  // Job table
+  document.getElementById('drillJobs').innerHTML=c.jobs.map(j=>`<tr><td>${j.name}</td><td>¥${j.cost.toLocaleString()}</td><td>${j.clicks.toLocaleString()}</td><td>${j.applies}</td><td>¥${j.cpa.toLocaleString()}</td></tr>`).join('');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('drillPanel').classList.add('show');
+}
+
+function closeDrill(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('drillPanel').classList.remove('show');
+}
+document.getElementById('closePanel').addEventListener('click',closeDrill);
+document.getElementById('overlay').addEventListener('click',closeDrill);
+document.getElementById('companyBody').addEventListener('click',e=>{
+  const tr=e.target.closest('tr');if(!tr)return;
+  openDrill(tr.dataset.id);
+});
+
+// ===== FILTER HANDLERS =====
+document.getElementById('periodFilters').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  e.currentTarget.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  currentPeriod=e.target.textContent;
+  renderKPIs();renderCharts();
+});
+document.getElementById('accountFilters').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  e.currentTarget.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  currentAccount=e.target.textContent;
+  renderKPIs();renderCharts();
+});
+
+// ===== INIT =====
+renderKPIs();renderCharts();renderCompanyTable();
 </script>
 </body>
 </html>
