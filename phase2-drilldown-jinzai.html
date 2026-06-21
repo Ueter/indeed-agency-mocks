@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ETK 人材紹介・派遣 - ドリルダウン</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2557a7;--bg:#f4f6f8;--card:#fff;--text:#1a1a2e;--gray:#6b7280;--border:#e5e7eb;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--primary);color:#fff;padding:20px 0;position:fixed;top:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar h2{padding:0 20px 20px;font-size:14px;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:12px}
+.sidebar .nav-item{display:block;padding:10px 20px;color:#fff;text-decoration:none;font-size:13px;border-left:3px solid transparent}
+.sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(255,255,255,.1);border-left-color:#fff}
+.main{margin-left:240px;flex:1;padding:24px;max-width:1200px}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.back-link{font-size:13px;display:inline-block;margin-bottom:16px}
+
+/* ヘッダー */
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.page-header h1{font-size:22px;color:var(--primary)}
+.status-badge{padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600}
+.status-badge.ok{background:#d1fae5;color:#065f46}
+.status-badge.warn{background:#fef3c7;color:#92400e}
+.meta{font-size:12px;color:var(--gray);margin-bottom:20px}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.kpi-card{background:var(--card);border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-align:center}
+.kpi-card .label{font-size:11px;color:var(--gray)}
+.kpi-card .value{font-size:22px;font-weight:700;margin:4px 0}
+.kpi-card .sub{font-size:11px;color:var(--gray)}
+.kpi-card .change{font-size:11px}
+.kpi-card .change.up{color:var(--success)}
+.kpi-card .change.down{color:var(--danger)}
+
+/* 予算バー */
+.budget-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:20px}
+.budget-card h3{font-size:13px;margin-bottom:8px}
+.budget-bar{height:20px;background:var(--border);border-radius:10px;position:relative;overflow:hidden}
+.budget-fill{height:100%;border-radius:10px}
+.budget-fill.behind{background:var(--warning)}
+.budget-fill.on-track{background:var(--primary)}
+.budget-marker{position:absolute;top:0;height:100%;width:2px;background:var(--text)}
+.budget-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-top:6px}
+.budget-meta strong{color:var(--text)}
+
+/* アラート */
+.alert-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:20px;border-left:4px solid var(--warning)}
+.alert-card h3{font-size:13px;margin-bottom:10px;color:var(--warning)}
+.alert-item{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.5}
+.alert-item:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot-red{background:var(--danger)}
+.dot-yellow{background:var(--warning)}
+
+/* 提案 */
+.suggest-card{background:#f0f4ff;border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:20px;border-left:4px solid var(--primary)}
+.suggest-card h3{font-size:13px;margin-bottom:10px;color:var(--primary)}
+.suggest-item{padding:8px 0;border-bottom:1px solid #dde4f0;font-size:12px;line-height:1.6}
+.suggest-item:last-child{border-bottom:none}
+.suggest-item strong{display:block;margin-bottom:2px}
+
+/* グラフ */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.chart-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.chart-card h3{font-size:13px;margin-bottom:10px;color:var(--text)}
+.chart-card canvas{width:100%!important;height:200px!important}
+.chart-full{grid-column:1/-1}
+
+/* テーブル */
+.table-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:20px}
+.table-card h3{font-size:13px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);font-weight:600;font-size:11px;color:var(--gray)}
+td{padding:8px 10px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+.text-right{text-align:right}
+.highlight-row{background:#fef3c7}
+.up{color:var(--success)}
+.down{color:var(--danger)}
+
+/* レスポンシブ */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-grid{grid-template-columns:1fr}
+  .chart-full{grid-column:1}
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+<h2>Indeed 広告運用管理</h2>
+<a class="nav-item" href="phase2-dashboard.html">📊 ダッシュボード</a>
+<a class="nav-item active" href="#">📋 キャンペーン一覧</a>
+<a class="nav-item" href="#">📈 レポート</a>
+<a class="nav-item" href="#">⚙️ 設定</a>
+</aside>
+
+<main class="main">
+<a href="phase2-dashboard.html" class="back-link">← ダッシュボードに戻る</a>
+
+<div class="page-header">
+  <h1>ETK & Co. 人材紹介・派遣</h1>
+  <span class="status-badge warn">要注意</span>
+</div>
+<p class="meta">集計期間: 2026/06/01 〜 06/21（21日間）｜ 最終更新: 2026/06/22 08:00</p>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="label">費用消化</div><div class="value">¥480K</div><div class="sub">予算 ¥1,000K</div><div class="change down">消化率 48%</div></div>
+  <div class="kpi-card"><div class="label">クリック</div><div class="value">1,800</div><div class="sub">着地 3,000</div><div class="change down">目標 3,600</div></div>
+  <div class="kpi-card"><div class="label">応募</div><div class="value">38</div><div class="sub">着地 63</div><div class="change down">目標 80</div></div>
+  <div class="kpi-card"><div class="label">CVR</div><div class="value down">2.1%</div><div class="sub">目標 2.5%</div><div class="change down">▼ 0.4pt</div></div>
+  <div class="kpi-card"><div class="label">CPA</div><div class="value down">¥12,632</div><div class="sub">目標 ¥9,000</div><div class="change down">▲ +40%</div></div>
+</div>
+
+<!-- 予算消化 -->
+<div class="budget-card">
+  <h3>予算消化進捗</h3>
+  <div class="budget-bar">
+    <div class="budget-fill behind" style="width:48%"></div>
+    <div class="budget-marker" style="left:70%" title="理想消化ライン（21日/30日=70%）"></div>
+  </div>
+  <div class="budget-meta">
+    <span>消化: <strong>¥480K</strong> / ¥1,000K</span>
+    <span>理想ライン: 70%（▼22pt 遅れ）</span>
+    <span>着地見込: <strong class="down">¥800K</strong>（目標未達）</span>
+  </div>
+</div>
+
+<!-- アラート -->
+<div class="alert-card">
+  <h3>⚠ アラート（4件）</h3>
+  <div class="alert-item"><span class="dot dot-red"></span><div><strong>予算消化ペース遅れ</strong> — 48%消化（理想70%）。着地¥800K見込み、目標¥1M未達。</div></div>
+  <div class="alert-item"><span class="dot dot-red"></span><div><strong>CVR低下</strong> — 全体CVR 2.1%（目標2.5%下回り）。「派遣コーディネーター」1.9%で大幅低下。</div></div>
+  <div class="alert-item"><span class="dot dot-red"></span><div><strong>CPA悪化</strong> — ¥12,632（目標比 +40%）。CVR低下に伴い悪化。</div></div>
+  <div class="alert-item"><span class="dot dot-yellow"></span><div><strong>CPC上昇傾向</strong> — 「キャリアアドバイザー」CPC ¥269（先週比+15%）。競合入札強化の可能性。</div></div>
+</div>
+
+<!-- 提案 -->
+<div class="suggest-card">
+  <h3>💡 改善提案</h3>
+  <div class="suggest-item"><strong>1. 「派遣コーディネーター」の原稿改善</strong>CVR 2.0%と最低。タイトルに年収・勤務地を明記し、応募導線を簡素化してCVR改善を図る。</div>
+  <div class="suggest-item"><strong>2. 予算再配分</strong>CPA良好な「法人営業」「事務スタッフ」に予算を寄せ、全体CPA改善。</div>
+  <div class="suggest-item"><strong>3. 入札調整</strong>CPC上昇中の「キャリアアドバイザー」で時間帯別パフォーマンスを分析し、低効率帯の入札を抑制。</div>
+  <div class="suggest-item"><strong>4. 消化ペース回復</strong>月末に向け「法人営業」「事務スタッフ」の露出強化で消化ペースを上げる。</div>
+</div>
+
+<!-- グラフ -->
+<div class="charts-grid">
+  <div class="chart-card"><h3>日別 費用推移</h3><canvas id="chartCost"></canvas></div>
+  <div class="chart-card"><h3>日別 CPA推移</h3><canvas id="chartCPA"></canvas></div>
+  <div class="chart-card"><h3>日別 クリック・応募推移</h3><canvas id="chartClickApply"></canvas></div>
+  <div class="chart-card"><h3>求人別 費用構成（累計）</h3><canvas id="chartPie"></canvas></div>
+</div>
+
+<!-- 週別テーブル -->
+<div class="table-card">
+  <h3>週別パフォーマンス</h3>
+  <table>
+    <tr><th></th><th class="text-right">費用</th><th class="text-right">Click</th><th class="text-right">応募</th><th class="text-right">CVR</th><th class="text-right">CPA</th><th class="text-right">CPC</th></tr>
+    <tr><td>W1 (6/1-7)</td><td class="text-right">¥110K</td><td class="text-right">420</td><td class="text-right">8</td><td class="text-right down">1.9%</td><td class="text-right down">¥13,750</td><td class="text-right">¥262</td></tr>
+    <tr><td>W2 (6/8-14)</td><td class="text-right">¥150K</td><td class="text-right">580</td><td class="text-right">12</td><td class="text-right down">2.1%</td><td class="text-right down">¥12,500</td><td class="text-right">¥259</td></tr>
+    <tr><td>W3 (6/15-21)</td><td class="text-right">¥220K</td><td class="text-right">800</td><td class="text-right">18</td><td class="text-right down">2.3%</td><td class="text-right down">¥12,222</td><td class="text-right">¥275</td></tr>
+    <tr style="font-weight:700;background:var(--bg)"><td>合計</td><td class="text-right">¥480K</td><td class="text-right">1,800</td><td class="text-right">38</td><td class="text-right down">2.1%</td><td class="text-right down">¥12,632</td><td class="text-right">¥267</td></tr>
+  </table>
+</div>
+
+<!-- 求人別テーブル -->
+<div class="table-card">
+  <h3>求人別パフォーマンス</h3>
+  <table>
+    <tr><th>求人名</th><th class="text-right">費用</th><th class="text-right">予算</th><th class="text-right">消化率</th><th class="text-right">Click</th><th class="text-right">応募</th><th class="text-right">CVR</th><th class="text-right">CPA</th><th>状態</th></tr>
+    <tr class="highlight-row"><td>派遣コーディネーター（東京）</td><td class="text-right">¥160K</td><td class="text-right">¥340K</td><td class="text-right">47%</td><td class="text-right">600</td><td class="text-right">12</td><td class="text-right down">2.0%</td><td class="text-right down">¥13,333</td><td><span class="dot dot-red" style="display:inline-block"></span></td></tr>
+    <tr class="highlight-row"><td>キャリアアドバイザー（大阪）</td><td class="text-right">¥140K</td><td class="text-right">¥300K</td><td class="text-right">47%</td><td class="text-right">520</td><td class="text-right">10</td><td class="text-right down">1.9%</td><td class="text-right down">¥14,000</td><td><span class="dot dot-red" style="display:inline-block"></span></td></tr>
+    <tr><td>法人営業（東京）</td><td class="text-right">¥100K</td><td class="text-right">¥200K</td><td class="text-right">50%</td><td class="text-right">400</td><td class="text-right">9</td><td class="text-right">2.3%</td><td class="text-right down">¥11,111</td><td><span class="dot dot-yellow" style="display:inline-block"></span></td></tr>
+    <tr><td>事務スタッフ（横浜）</td><td class="text-right">¥80K</td><td class="text-right">¥160K</td><td class="text-right">50%</td><td class="text-right">280</td><td class="text-right">7</td><td class="text-right">2.5%</td><td class="text-right down">¥11,429</td><td><span class="dot dot-yellow" style="display:inline-block"></span></td></tr>
+    <tr style="font-weight:700;background:var(--bg)"><td>合計</td><td class="text-right">¥480K</td><td class="text-right">¥1,000K</td><td class="text-right">48%</td><td class="text-right">1,800</td><td class="text-right">38</td><td class="text-right down">2.1%</td><td class="text-right down">¥12,632</td><td></td></tr>
+  </table>
+</div>
+
+<!-- 求人別週次推移 -->
+<div class="table-card">
+  <h3>求人別 週次推移</h3>
+  <table>
+    <tr><th>求人名</th><th class="text-right" colspan="3">W1</th><th class="text-right" colspan="3">W2</th><th class="text-right" colspan="3">W3</th></tr>
+    <tr><th></th><th class="text-right">費用</th><th class="text-right">応募</th><th class="text-right">CPA</th><th class="text-right">費用</th><th class="text-right">応募</th><th class="text-right">CPA</th><th class="text-right">費用</th><th class="text-right">応募</th><th class="text-right">CPA</th></tr>
+    <tr><td>派遣コーディネーター</td><td class="text-right">¥38K</td><td class="text-right">2</td><td class="text-right down">¥19,000</td><td class="text-right">¥50K</td><td class="text-right">4</td><td class="text-right down">¥12,500</td><td class="text-right">¥72K</td><td class="text-right">6</td><td class="text-right down">¥12,000</td></tr>
+    <tr><td>キャリアアドバイザー</td><td class="text-right">¥32K</td><td class="text-right">2</td><td class="text-right down">¥16,000</td><td class="text-right">¥44K</td><td class="text-right">3</td><td class="text-right down">¥14,667</td><td class="text-right">¥64K</td><td class="text-right">5</td><td class="text-right down">¥12,800</td></tr>
+    <tr><td>法人営業</td><td class="text-right">¥22K</td><td class="text-right">2</td><td class="text-right down">¥11,000</td><td class="text-right">¥32K</td><td class="text-right">3</td><td class="text-right down">¥10,667</td><td class="text-right">¥46K</td><td class="text-right">4</td><td class="text-right down">¥11,500</td></tr>
+    <tr><td>事務スタッフ</td><td class="text-right">¥18K</td><td class="text-right">2</td><td class="text-right">¥9,000</td><td class="text-right">¥24K</td><td class="text-right">2</td><td class="text-right down">¥12,000</td><td class="text-right">¥38K</td><td class="text-right">3</td><td class="text-right down">¥12,667</td></tr>
+  </table>
+</div>
+
+<a href="phase2-dashboard.html" class="back-link" style="margin-top:12px;margin-bottom:32px;display:inline-block">← ダッシュボードに戻る</a>
+</main>
+
+<script>
+const days = Array.from({length:21}, (_,i) => `6/${i+1}`);
+const cost = [16,18,14,15,13,11,13,20,22,18,24,26,20,18,22,26,30,24,20,24,22];
+const cpa = [14500,13800,14200,13500,14000,14800,13200,12800,12500,13000,12200,11800,12600,13000,12400,12000,11500,12200,12800,12632,12400];
+const clicks = [60,68,54,58,50,44,55,78,86,72,92,96,76,68,84,92,105,86,74,90,82];
+const applies = [1,2,1,1,2,1,2,2,3,2,3,3,2,2,2,3,3,2,2,3,2];
+
+const chartOpts = {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
+
+new Chart(document.getElementById('chartCost'), {
+  type:'bar', data:{labels:days, datasets:[{label:'費用(K)',data:cost,backgroundColor:'#f59e0b',borderRadius:3}]},
+  options:{...chartOpts,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>'¥'+v+'K'},grid:{color:'#f0f0f0'}}}}
+});
+
+new Chart(document.getElementById('chartCPA'), {
+  type:'line', data:{labels:days, datasets:[
+    {label:'CPA',data:cpa,borderColor:'#ef4444',borderWidth:2,pointRadius:0,tension:.3,fill:false},
+    {label:'目標',data:Array(21).fill(9000),borderColor:'#10b981',borderWidth:1.5,borderDash:[5,5],pointRadius:0,fill:false}
+  ]},
+  options:{...chartOpts,scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>'¥'+v.toLocaleString()},grid:{color:'#f0f0f0'}}}}
+});
+
+new Chart(document.getElementById('chartClickApply'), {
+  type:'line', data:{labels:days, datasets:[
+    {label:'クリック',data:clicks,borderColor:'#2557a7',borderWidth:2,pointRadius:0,tension:.3,fill:false,yAxisID:'y'},
+    {label:'応募',data:applies,borderColor:'#10b981',borderWidth:2,pointRadius:2,tension:.3,fill:false,yAxisID:'y1'}
+  ]},
+  options:{...chartOpts,scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:'#f0f0f0'}},y1:{position:'right',grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('chartPie'), {
+  type:'doughnut', data:{labels:['派遣コーディネーター','キャリアアドバイザー','法人営業','事務スタッフ'],datasets:[{data:[160,140,100,80],backgroundColor:['#ef4444','#f59e0b','#2557a7','#10b981']}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
+});
+</script>
+</body>
+</html>

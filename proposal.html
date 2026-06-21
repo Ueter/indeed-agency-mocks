@@ -8,78 +8,50 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
 .wrap { max-width: 900px; margin: 0 auto; padding: 48px 32px; }
-
-/* 表紙 */
 .cover { text-align: center; padding: 80px 0 60px; border-bottom: 3px solid #2557a7; margin-bottom: 48px; }
 .cover h1 { font-size: 32px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 8px; }
 .cover .subtitle { font-size: 16px; color: #555; margin-bottom: 40px; }
 .cover-meta { font-size: 14px; color: #555; line-height: 2; }
 .cover-meta strong { color: #1a1a1a; }
-
-/* セクション */
 section { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid #e0e0e0; }
 section:last-child { border-bottom: none; }
 h2 { font-size: 20px; font-weight: 700; color: #2557a7; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #2557a7; }
 h3 { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
 p { margin-bottom: 12px; }
-
-/* テーブル */
 table { width: 100%; border-collapse: collapse; margin: 16px 0; }
 th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; text-align: left; padding: 10px 12px; border-bottom: 2px solid #e0e0e0; font-weight: 600; }
 td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
 tr:last-child td { border-bottom: none; }
-table.compact th:first-child, table.compact td:first-child { width: 32px; text-align: center; }
-
-/* フェーズカード */
-.phase-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 28px 28px 20px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.phase-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 28px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .phase-card h3 { color: #2557a7; font-size: 18px; margin-bottom: 6px; }
 .phase-card .phase-desc { color: #555; font-size: 14px; margin-bottom: 16px; }
 .phase-card h4 { font-size: 14px; font-weight: 700; margin: 16px 0 8px; color: #333; }
-.phase-card ul { margin-left: 20px; margin-bottom: 12px; }
+.phase-card ul, .phase-card ol { margin-left: 20px; margin-bottom: 12px; }
 .phase-card li { margin-bottom: 4px; }
 .phase-cost { background: #f8f9fa; border-radius: 6px; padding: 12px 16px; margin-top: 16px; }
-.phase-cost table { margin: 0; }
-.phase-cost td, .phase-cost th { padding: 6px 12px; border: none; }
-
-/* リスト */
+.phase-cost td { padding: 6px 12px; border: none; }
 ul { margin-left: 20px; margin-bottom: 12px; }
 li { margin-bottom: 4px; }
 ol { margin-left: 20px; margin-bottom: 12px; }
-ol li { margin-bottom: 4px; }
-
-/* ガントチャート */
+.summary-table th { text-align: center; }
+.summary-table td { text-align: center; }
+.summary-table td:first-child, .summary-table th:first-child { text-align: left; }
+.summary-table tfoot td { border-top: 2px solid #2557a7; font-weight: 700; }
 .gantt { margin: 24px 0; }
 .gantt-row { display: flex; align-items: center; margin-bottom: 10px; }
 .gantt-label { width: 100px; font-size: 13px; font-weight: 600; color: #333; flex-shrink: 0; }
 .gantt-track { flex: 1; height: 28px; background: #f5f5f5; border-radius: 4px; position: relative; }
-.gantt-bar { position: absolute; height: 28px; border-radius: 4px; background: #2557a7; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 600; }
-.gantt-bar.p1 { left: 0%; width: 20%; }
-.gantt-bar.p2 { left: 16%; width: 26%; background: #3a6fb5; }
-.gantt-bar.p3 { left: 36%; width: 20%; background: #4d87c3; }
-.gantt-bar.p4 { left: 52%; width: 26%; background: #609fd1; }
-.gantt-bar.p5 { left: 74%; width: 26%; background: #73b7df; }
-.gantt-note { font-size: 12px; color: #888; margin-top: 12px; }
-
-/* 費用サマリーテーブル */
-.summary-table th { text-align: center; }
-.summary-table td { text-align: center; }
-.summary-table td:first-child, .summary-table th:first-child { text-align: left; }
-.summary-table td:last-child, .summary-table th:last-child { text-align: left; }
-.summary-table tfoot td { border-top: 2px solid #e0e0e0; font-weight: 600; font-size: 13px; color: #555; }
-
-/* エンディング */
-.ending { text-align: center; padding-top: 24px; }
-.ending p { margin-bottom: 8px; }
-.contact { margin-top: 24px; text-align: left; background: #f8f9fa; border-radius: 6px; padding: 20px 24px; display: inline-block; }
+.gantt-bar { position: absolute; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 600; }
+.gantt-months { display: flex; margin-left: 100px; margin-bottom: 4px; }
+.gantt-months span { flex: 1; font-size: 11px; color: #888; text-align: center; }
+.contact { margin-top: 24px; background: #f8f9fa; border-radius: 6px; padding: 20px 24px; }
 .contact p { margin-bottom: 4px; font-size: 14px; }
-
-/* 印刷 */
+.note { font-size: 13px; color: #666; margin-top: 8px; }
 @media print {
   body { font-size: 12px; }
   .wrap { padding: 0; max-width: 100%; }
   .phase-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
   section { break-inside: avoid; }
-  .cover { padding: 40px 0 30px; }
 }
 </style>
 </head>
@@ -91,9 +63,9 @@ ol li { margin-bottom: 4px; }
   <h1>Indeed広告運用管理システム<br>ご提案書</h1>
   <p class="subtitle">運用管理業務の効率化・自動化のご提案</p>
   <div class="cover-meta">
-    <p><strong>提出日:</strong> 2026年6月21日</p>
+    <p><strong>提出日:</strong> 2026年6月22日</p>
     <p><strong>提出先:</strong> ETK &amp; Co.合同会社 御中</p>
-    <p><strong>提出元:</strong> ________ （代理店名未定）</p>
+    <p><strong>提出元:</strong> 植田 善之</p>
   </div>
 </div>
 
@@ -102,7 +74,7 @@ ol li { margin-bottom: 4px; }
   <h2>1. はじめに</h2>
   <p>本提案書は、Indeed広告運用における管理業務の効率化・自動化を実現するシステムの開発についてご提案するものです。</p>
   <p>現在、管理画面上で手作業にて実施されている業務（数値確認・レポート作成・キャンペーン操作等）を、Indeed公式APIを活用したシステムにより段階的に自動化し、運用品質の向上とコスト削減を実現します。</p>
-  <p><strong>対象クライアント:</strong></p>
+  <p><strong>対象アカウント:</strong></p>
   <ul>
     <li>ETK &amp; Co.</li>
     <li>ETK JBSA</li>
@@ -114,15 +86,15 @@ ol li { margin-bottom: 4px; }
 <!-- 2. 現状の課題 -->
 <section>
   <h2>2. 現状の課題</h2>
-  <table class="compact">
-    <thead><tr><th>#</th><th>課題</th><th>影響</th></tr></thead>
+  <table>
+    <thead><tr><th style="width:32px;text-align:center">#</th><th>課題</th><th>影響</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>クライアントごとに管理画面へログインし数値を確認</td><td>確認に時間がかかり、即時の判断が困難</td></tr>
-      <tr><td>2</td><td>全社合計・横断比較が手作業</td><td>全体像の把握に遅延が生じる</td></tr>
-      <tr><td>3</td><td>レポート作成が手動</td><td>定期的な工数発生、ヒューマンエラーのリスク</td></tr>
-      <tr><td>4</td><td>キャンペーン操作を1件ずつ実施</td><td>4社×複数キャンペーンの操作に時間を要する</td></tr>
-      <tr><td>5</td><td>予算消化状況の把握がリアルタイムでない</td><td>過剰消化・未消化に気づくのが遅れる</td></tr>
-      <tr><td>6</td><td>クライアント情報・請求管理が分散</td><td>HubSpotと広告データが連動していない</td></tr>
+      <tr><td style="text-align:center">1</td><td>クライアントごとに管理画面へログインし数値を確認</td><td>確認に時間がかかり、即時の判断が困難</td></tr>
+      <tr><td style="text-align:center">2</td><td>全社合計・横断比較が手作業</td><td>全体像の把握に遅延が生じる</td></tr>
+      <tr><td style="text-align:center">3</td><td>レポート作成が手動</td><td>定期的な工数発生、ヒューマンエラーのリスク</td></tr>
+      <tr><td style="text-align:center">4</td><td>キャンペーン操作を1件ずつ実施</td><td>4社×複数キャンペーンの操作に時間を要する</td></tr>
+      <tr><td style="text-align:center">5</td><td>予算消化状況の把握がリアルタイムでない</td><td>過剰消化・未消化に気づくのが遅れる</td></tr>
+      <tr><td style="text-align:center">6</td><td>クライアント情報・請求管理が分散</td><td>HubSpotと広告データが連動していない</td></tr>
     </tbody>
   </table>
 </section>
@@ -133,99 +105,51 @@ ol li { margin-bottom: 4px; }
 
   <!-- Phase 1 -->
   <div class="phase-card">
-    <h3>Phase 1: 定期レポート自動送付</h3>
-    <p class="phase-desc">1日数回、4アカウント全体の運用状況サマリーを代理店スタッフへ自動配信</p>
-    <p><strong>対象:</strong> ETK &amp; Co. / ETK JBSA / ETK 人材紹介・派遣 / ETK 直雇用（4アカウント）</p>
+    <h3>Phase 1: ダッシュボード＋定期レポート</h3>
+    <p class="phase-desc">Webダッシュボードで全クライアントの運用状況をリアルタイム確認 ＋ 定期レポートをメール/チャットで自動配信</p>
 
-    <h4>配信仕様</h4>
-    <table>
-      <tbody>
-        <tr><td><strong>配信先</strong></td><td>代理店スタッフ</td></tr>
-        <tr><td><strong>配信頻度</strong></td><td>1日数回（朝・昼・夕 等、設定可能）</td></tr>
-        <tr><td><strong>配信手段</strong></td><td>メール / チャット（Slack等）</td></tr>
-      </tbody>
-    </table>
-
-    <h4>レポート粒度（ドリルダウン構造）</h4>
-    <ol>
-      <li><strong>全社合計</strong> — ポートフォリオ全体の概況</li>
-      <li><strong>アカウント別</strong> — ETK &amp; Co. / ETK JBSA / ETK 人材紹介・派遣 / ETK 直雇用</li>
-      <li><strong>キャンペーン別</strong> — 各アカウント内キャンペーンの詳細</li>
-    </ol>
-
-    <h4>主要指標（全レベル共通）</h4>
+    <h4>ダッシュボード</h4>
     <ul>
-      <li>費用（設定予算 / 消化額 / 消化率 / 着地予測 / 目標差分）</li>
-      <li>クリック数</li>
-      <li>応募数</li>
-      <li>CVR（応募率）</li>
-      <li>CPA（応募単価）</li>
+      <li>PC・モバイル両対応（レスポンシブデザイン）</li>
+      <li>ポートフォリオ全体 → アカウント別 → 求人別のドリルダウン</li>
+      <li>期間フィルタ（今日/今週/今月/四半期/半期）</li>
+      <li>トレンドグラフ・目標との乖離をリアルタイム可視化</li>
+      <li>アラート表示（予算超過、CVR低下、CPA悪化等）</li>
     </ul>
 
-    <p><strong>目標管理:</strong> 全社合計・アカウント別・キャンペーン別の各レベルに目標値を設定可能</p>
-    <p><strong>着地予測:</strong> 線形予測（現在ペースが継続した場合の期末見込み）</p>
-
-    <h4>集計期間</h4>
+    <h4>定期レポート自動送付</h4>
     <ul>
-      <li>今日</li>
-      <li>今週</li>
-      <li>今月</li>
-      <li>四半期</li>
-      <li>半期</li>
+      <li>配信先: 代理店スタッフ</li>
+      <li>配信頻度: 1日数回（朝・昼・夕、設定可能）</li>
+      <li>配信手段: メール / Slack / LINE</li>
+      <li>ドリルダウン構造（全社合計 → アカウント別 → キャンペーン別）</li>
+    </ul>
+
+    <h4>主要指標</h4>
+    <ul>
+      <li>費用（設定予算 / 消化額 / 消化率 / 着地予測）</li>
+      <li>クリック数・応募数・CVR・CPA</li>
+      <li>目標値との差分表示</li>
     </ul>
 
     <div class="phase-cost">
       <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>____週間</td></tr>
-          <tr><td><strong>AWS月額費用</strong></td><td>¥______</td></tr>
-          <tr><td><strong>開発フィー</strong></td><td>¥______</td></tr>
-        </tbody>
+        <tr><td><strong>開発期間</strong></td><td>4週間</td></tr>
+        <tr><td><strong>開発フィー</strong></td><td>¥800,000</td></tr>
+        <tr><td><strong>AWS月額費用</strong></td><td>¥3,000〜5,000/月</td></tr>
       </table>
     </div>
   </div>
 
   <!-- Phase 2 -->
   <div class="phase-card">
-    <h3>Phase 2: ダッシュボード</h3>
-    <p class="phase-desc">Webブラウザで全クライアントの運用状況をリアルタイム確認</p>
+    <h3>Phase 2: クライアント向け自動レポート生成</h3>
+    <p class="phase-desc">クライアント担当者に提出するレポートを自動生成・配信</p>
 
     <h4>実現すること</h4>
     <ul>
-      <li><strong>PC・モバイル両対応</strong>（レスポンシブデザイン）</li>
-      <li><strong>代理店スタッフ全員がアクセス可能</strong></li>
-      <li>権限は代理店単位で全開放（個別権限制御なし）</li>
-      <li>期間比較・トレンドグラフ・ドリルダウン</li>
-      <li>目標との乖離をリアルタイム可視化</li>
-      <li>Phase 1と同じ指標・粒度・期間をインタラクティブに探索</li>
-    </ul>
-
-    <h4>Phase 1との違い</h4>
-    <ul>
-      <li>Phase 1 = プッシュ型（定期配信、スナップショット）</li>
-      <li>Phase 2 = プル型（自由に探索、リアルタイム）</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>____週間</td></tr>
-          <tr><td><strong>AWS月額費用</strong></td><td>¥______</td></tr>
-          <tr><td><strong>開発フィー</strong></td><td>¥______</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 3 -->
-  <div class="phase-card">
-    <h3>Phase 3: クライアント向け自動レポート生成</h3>
-    <p class="phase-desc">クライアント（ETK &amp; Co. / ETK JBSA / ETK 人材紹介・派遣 / ETK 直雇用）に提出するレポートを自動生成・配信</p>
-
-    <h4>実現すること</h4>
-    <ul>
-      <li><strong>送り先:</strong> クライアント担当者</li>
-      <li><strong>デフォルト配信頻度:</strong> 週次 / 月次 / 四半期（任意の頻度に設定変更可能）</li>
+      <li>送り先: クライアント担当者</li>
+      <li>配信頻度: 週次 / 月次 / 四半期（任意設定可）</li>
       <li>ブランディング対応（ロゴ・フォーマット統一）</li>
       <li>PDF or Web共有リンクで配信</li>
       <li>手作業でのExcel集計が不要に</li>
@@ -233,18 +157,16 @@ ol li { margin-bottom: 4px; }
 
     <div class="phase-cost">
       <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>____週間</td></tr>
-          <tr><td><strong>AWS月額費用</strong></td><td>¥______</td></tr>
-          <tr><td><strong>開発フィー</strong></td><td>¥______</td></tr>
-        </tbody>
+        <tr><td><strong>開発期間</strong></td><td>3週間</td></tr>
+        <tr><td><strong>開発フィー</strong></td><td>¥500,000</td></tr>
+        <tr><td><strong>AWS月額費用</strong></td><td>+¥1,000〜2,000/月</td></tr>
       </table>
     </div>
   </div>
 
-  <!-- Phase 4 -->
+  <!-- Phase 3 -->
   <div class="phase-card">
-    <h3>Phase 4: 操作の自動化 + HubSpot連携</h3>
+    <h3>Phase 3: 操作の自動化 + HubSpot連携</h3>
     <p class="phase-desc">管理画面での手作業をシステムから一括・自動で実行し、HubSpotとのデータ連携で業務全体を統合</p>
 
     <h4>Indeed操作の自動化</h4>
@@ -261,154 +183,138 @@ ol li { margin-bottom: 4px; }
     </table>
 
     <h4>HubSpot連携</h4>
-    <table>
-      <thead><tr><th>連携内容</th><th>詳細</th></tr></thead>
-      <tbody>
-        <tr><td>クライアント情報同期</td><td>HubSpot上のクライアント情報をシステムに自動同期</td></tr>
-        <tr><td>レポート配信</td><td>HubSpotのコンタクト情報に基づきレポートを自動配信</td></tr>
-        <tr><td>応募→Deal</td><td>Indeed応募をHubSpotのDealとして自動作成</td></tr>
-        <tr><td>広告費→請求</td><td>広告費データをHubSpotの請求管理に連動</td></tr>
-      </tbody>
-    </table>
-
-    <h4>提供形態</h4>
     <ul>
-      <li>ダッシュボードからの一括操作UI</li>
+      <li>クライアント情報同期</li>
+      <li>応募→Deal自動作成</li>
+      <li>広告費→請求管理連動</li>
       <li>ルールベース自動実行（例: 予算消化率80%超過で自動停止）</li>
     </ul>
 
     <div class="phase-cost">
       <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>____週間</td></tr>
-          <tr><td><strong>AWS月額費用</strong></td><td>¥______</td></tr>
-          <tr><td><strong>開発フィー</strong></td><td>¥______</td></tr>
-        </tbody>
+        <tr><td><strong>開発期間</strong></td><td>5週間</td></tr>
+        <tr><td><strong>開発フィー</strong></td><td>¥1,200,000</td></tr>
+        <tr><td><strong>AWS月額費用</strong></td><td>+¥2,000〜4,000/月</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase-card">
+    <h3>Phase 4: AI活用の運用・分析の自動化</h3>
+    <p class="phase-desc">蓄積データとAIを活用し、運用判断の自動化・最適化を実現</p>
+
+    <h4>想定機能</h4>
+    <ul>
+      <li>CPC・予算自動調整 — パフォーマンスデータに基づく最適入札</li>
+      <li>異常検知 — 不正クリック疑い・応募急減・コスト急増のアラート</li>
+      <li>求人原稿最適化 — AIによる原稿の自動生成・改善提案</li>
+      <li>予算自動配分 — 成果の良いキャンペーンへ自動シフト</li>
+      <li>HubSpotパイプラインデータを含めた真の採用単価最適化</li>
+    </ul>
+
+    <div class="phase-cost">
+      <table>
+        <tr><td><strong>開発期間</strong></td><td>6週間</td></tr>
+        <tr><td><strong>開発フィー</strong></td><td>¥1,500,000</td></tr>
+        <tr><td><strong>AWS月額費用</strong></td><td>+¥5,000〜10,000/月</td></tr>
       </table>
     </div>
   </div>
 
   <!-- Phase 5 -->
   <div class="phase-card">
-    <h3>Phase 5: AI活用の運用・分析の自動化</h3>
-    <p class="phase-desc">蓄積データとAI、HubSpotパイプラインデータを活用し、運用判断の自動化・最適化を実現</p>
-
-    <h4>想定機能</h4>
-    <ul>
-      <li><strong>CPC・予算自動調整</strong> — パフォーマンスデータに基づく最適入札</li>
-      <li><strong>異常検知</strong> — 不正クリック疑い・応募急減・コスト急増等のアラート</li>
-      <li><strong>求人原稿最適化</strong> — AIによる原稿の自動生成・改善提案</li>
-      <li><strong>パフォーマンスベースの予算自動配分</strong> — 成果の良いキャンペーンへ自動的に予算をシフト</li>
-      <li><strong>HubSpotパイプラインデータを含めた分析</strong> — 応募→面接→採用の歩留まりを考慮した真の採用単価最適化</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>____週間</td></tr>
-          <tr><td><strong>AWS月額費用</strong></td><td>¥______</td></tr>
-          <tr><td><strong>開発フィー</strong></td><td>¥______</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 6 -->
-  <div class="phase-card">
-    <h3>(Phase 6): 他代理店へのサービス展開</h3>
+    <h3>(Phase 5): 他代理店へのサービス展開</h3>
     <p class="phase-desc">本システムで培ったノウハウと仕組みを、他の広告代理店向けにサービスとして展開</p>
-
-    <h4>想定形態</h4>
     <ul>
       <li>運用代行サービス（BPO型）</li>
-      <li>※ Indeed API契約上、システム自体のSaaS提供には別途交渉が必要（契約上の制約あり）</li>
+      <li>※ Indeed API契約上、システム自体のSaaS提供には別途交渉が必要</li>
     </ul>
-
     <div class="phase-cost">
       <table>
-        <tbody>
-          <tr><td><strong>開発期間</strong></td><td>要検討</td></tr>
-          <tr><td><strong>費用</strong></td><td>要検討</td></tr>
-        </tbody>
+        <tr><td><strong>開発期間</strong></td><td>要検討</td></tr>
+        <tr><td><strong>費用</strong></td><td>要検討</td></tr>
       </table>
     </div>
   </div>
 </section>
 
-<!-- 4. 技術的裏付け -->
+<!-- 4. 費用・期間サマリー -->
 <section>
-  <h2>4. 技術的裏付け</h2>
+  <h2>4. 費用・期間サマリー</h2>
+  <table class="summary-table">
+    <thead>
+      <tr><th>フェーズ</th><th>開発期間</th><th>開発フィー</th><th>AWS月額（増分）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Phase 1: ダッシュボード＋定期レポート</td><td>4週間</td><td>¥800,000</td><td>¥3,000〜5,000</td></tr>
+      <tr><td>Phase 2: クライアント向けレポート</td><td>3週間</td><td>¥500,000</td><td>+¥1,000〜2,000</td></tr>
+      <tr><td>Phase 3: 操作自動化 + HubSpot</td><td>5週間</td><td>¥1,200,000</td><td>+¥2,000〜4,000</td></tr>
+      <tr><td>Phase 4: AI活用</td><td>6週間</td><td>¥1,500,000</td><td>+¥5,000〜10,000</td></tr>
+      <tr><td>(Phase 5): 他代理店展開</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td>合計（Phase 1〜4）</td><td>約18週間</td><td>¥4,000,000</td><td>¥11,000〜21,000/月</td></tr>
+    </tfoot>
+  </table>
+  <p class="note">※ 費用は概算の叩き台です。要件詳細化後に正式見積りを提示します。</p>
+  <p class="note">※ AWS月額費用はアカウント数4社・現在の利用想定規模に基づく見積りです。</p>
+  <p class="note">※ 各フェーズ完了後に成果確認 → 次フェーズ着手の段階進行が可能です。</p>
+</section>
+
+<!-- 5. スケジュール -->
+<section>
+  <h2>5. スケジュール（案）</h2>
+  <div class="gantt">
+    <div class="gantt-months"><span>7月</span><span>8月</span><span>9月</span><span>10月</span><span>11月</span><span>12月</span></div>
+    <div class="gantt-row">
+      <div class="gantt-label">Phase 1</div>
+      <div class="gantt-track"><div class="gantt-bar" style="left:0;width:22%;background:#2557a7">4週</div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">Phase 2</div>
+      <div class="gantt-track"><div class="gantt-bar" style="left:22%;width:17%;background:#3a6fb5">3週</div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">Phase 3</div>
+      <div class="gantt-track"><div class="gantt-bar" style="left:39%;width:28%;background:#4d87c3">5週</div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">Phase 4</div>
+      <div class="gantt-track"><div class="gantt-bar" style="left:67%;width:33%;background:#609fd1">6週</div></div>
+    </div>
+  </div>
+  <p class="note">※ 2026年7月着手想定。Partner申請承認後に開始。</p>
+  <p class="note">※ 各フェーズ間に1週間のレビュー・調整期間を含む。</p>
+</section>
+
+<!-- 6. 技術的裏付け -->
+<section>
+  <h2>6. 技術的裏付け</h2>
   <table>
     <tbody>
       <tr><td><strong>利用API</strong></td><td>Indeed Job Update API (GraphQL) + Sponsored Jobs API (REST)</td></tr>
       <tr><td><strong>認証方式</strong></td><td>OAuth 2.0 (client_credentials)</td></tr>
-      <tr><td><strong>インフラ</strong></td><td>AWS (Lambda, DynamoDB, S3, CloudWatch等)</td></tr>
+      <tr><td><strong>インフラ</strong></td><td>AWS (Lambda, DynamoDB, S3, CloudWatch, EventBridge)</td></tr>
       <tr><td><strong>外部連携</strong></td><td>HubSpot API</td></tr>
       <tr><td><strong>API仕様確認</strong></td><td>完了済み — 全要件がAPI機能でカバー可能であることを確認</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- 5. 前提条件 -->
+<!-- 7. 前提条件 -->
 <section>
-  <h2>5. 前提条件・必要なアクション</h2>
-  <table class="compact">
-    <thead><tr><th>#</th><th>必要事項</th><th>状態</th></tr></thead>
+  <h2>7. 前提条件・必要なアクション</h2>
+  <table>
+    <thead><tr><th style="width:32px;text-align:center">#</th><th>必要事項</th><th>状態</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>Indeed Partner申請・承認</td><td>申請準備中</td></tr>
-      <tr><td>2</td><td>Partner申請に必要な会社情報のご提供</td><td>確認中</td></tr>
-      <tr><td>3</td><td>各クライアントのIndeedアカウント連携承認</td><td>未着手</td></tr>
-      <tr><td>4</td><td>目標値の設定（全社/アカウント別/キャンペーン別）</td><td>未着手</td></tr>
-      <tr><td>5</td><td>HubSpot APIアクセス権限</td><td>未着手</td></tr>
+      <tr><td style="text-align:center">1</td><td>Indeed Partner申請・承認</td><td>申請準備中</td></tr>
+      <tr><td style="text-align:center">2</td><td>Partner申請に必要な会社情報のご提供</td><td>確認中</td></tr>
+      <tr><td style="text-align:center">3</td><td>各クライアントのIndeedアカウント連携承認</td><td>未着手</td></tr>
+      <tr><td style="text-align:center">4</td><td>目標値の設定（全社/アカウント別/キャンペーン別）</td><td>未着手</td></tr>
+      <tr><td style="text-align:center">5</td><td>HubSpot APIアクセス権限（Phase 3以降）</td><td>未着手</td></tr>
     </tbody>
   </table>
-</section>
-
-<!-- 6. 費用サマリー -->
-<section>
-  <h2>6. 費用サマリー</h2>
-  <table class="summary-table">
-    <thead>
-      <tr><th>フェーズ</th><th>開発期間</th><th>開発フィー</th><th>AWS月額</th><th>備考</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Phase 1</td><td>__週</td><td>¥____</td><td>¥____</td><td>定期レポート自動送付</td></tr>
-      <tr><td>Phase 2</td><td>__週</td><td>¥____</td><td>¥____</td><td>ダッシュボード</td></tr>
-      <tr><td>Phase 3</td><td>__週</td><td>¥____</td><td>¥____</td><td>クライアント向けレポート</td></tr>
-      <tr><td>Phase 4</td><td>__週</td><td>¥____</td><td>¥____</td><td>操作自動化 + HubSpot連携</td></tr>
-      <tr><td>Phase 5</td><td>__週</td><td>¥____</td><td>¥____</td><td>AI活用の運用・分析自動化</td></tr>
-      <tr><td>(Phase 6)</td><td>—</td><td>—</td><td>—</td><td>他代理店展開（要検討）</td></tr>
-    </tbody>
-  </table>
-  <p style="font-size: 13px; color: #666; margin-top: 12px;">※ 費用にはAWS等インフラ費用、開発フィー、経費を含む</p>
-</section>
-
-<!-- 7. スケジュール -->
-<section>
-  <h2>7. スケジュール（案）</h2>
-  <div class="gantt">
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 1</div>
-      <div class="gantt-track"><div class="gantt-bar p1">______</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 2</div>
-      <div class="gantt-track"><div class="gantt-bar p2">______</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 3</div>
-      <div class="gantt-track"><div class="gantt-bar p3">______</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 4</div>
-      <div class="gantt-track"><div class="gantt-bar p4">______</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 5</div>
-      <div class="gantt-track"><div class="gantt-bar p5">______</div></div>
-    </div>
-  </div>
-  <p class="gantt-note">※ 各フェーズ完了後に成果を確認いただき、次フェーズに進行</p>
 </section>
 
 <!-- 8. おわりに -->
@@ -417,11 +323,8 @@ ol li { margin-bottom: 4px; }
   <p>本提案は、現在手作業で実施されているIndeed広告運用管理を段階的にシステム化することで、業務効率の大幅な改善と運用品質の向上を実現するものです。</p>
   <p>Phase 1から着手し、早期に効果を実感いただきながら、段階的に機能を拡張してまいります。</p>
   <p>ご不明点・ご要望がございましたら、お気軽にご連絡ください。</p>
-
   <div class="contact">
     <p><strong>連絡先:</strong> 植田 善之</p>
-    <p><strong>メール:</strong> __________</p>
-    <p><strong>電話:</strong> __________</p>
   </div>
 </section>
 
