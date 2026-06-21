@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ポートフォリオ ダッシュボード</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2557a7;--bg:#f4f6f8;--card:#fff;--text:#1a1a2e;--gray:#6b7280;--border:#e5e7eb}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--primary);color:#fff;padding:20px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar h2{padding:0 20px 20px;font-size:14px;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:12px}
+.sidebar label{display:block;padding:4px 20px;font-size:11px;color:rgba(255,255,255,.7);margin-top:12px}
+.sidebar select,.sidebar button{width:calc(100% - 40px);margin:4px 20px;padding:8px;border-radius:4px;border:none;font-size:13px}
+.sidebar select{background:rgba(255,255,255,.15);color:#fff}
+.sidebar select option{color:#000}
+.sidebar .nav-item{display:block;padding:10px 20px;color:#fff;text-decoration:none;font-size:13px;border-left:3px solid transparent}
+.sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(255,255,255,.1);border-left-color:#fff}
+.main{margin-left:240px;flex:1;padding:24px;max-width:1200px}
+.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.header h1{font-size:22px;color:var(--primary)}
+.meta{font-size:12px;color:var(--gray);margin-bottom:20px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.filters button{padding:6px 14px;border:1px solid var(--border);border-radius:16px;background:#fff;cursor:pointer;font-size:12px}
+.filters button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);position:relative}
+.kpi-card .label{font-size:12px;color:var(--gray)}
+.kpi-card .value{font-size:26px;font-weight:700;margin:4px 0}
+.kpi-card .target{font-size:11px;color:var(--gray);display:flex;align-items:center;gap:4px}
+.kpi-card .edit-icon{cursor:pointer;opacity:.5;font-size:12px}
+.kpi-card .edit-icon:hover{opacity:1}
+.kpi-card .change{font-size:12px}
+.kpi-card .change.up{color:#10b981}
+.kpi-card .change.down{color:#ef4444}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:16px}
+.chart-card{background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.chart-card h3{font-size:14px;margin-bottom:12px;color:var(--text)}
+canvas{width:100%!important;height:250px!important}
+.hamburger{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--primary);color:#fff;border:none;border-radius:4px;padding:8px 12px;cursor:pointer;font-size:18px}
+@media(max-width:768px){
+ .sidebar{transform:translateX(-100%);transition:transform .3s}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0}
+ .hamburger{display:block}
+ .charts-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+<aside class="sidebar">
+<h2>Indeed 広告運用管理</h2>
+<label>アカウント</label>
+<select id="accountSelect">
+ <option>全アカウント</option>
+ <option>ETK &amp; Co.</option>
+ <option>ETK JBSA</option>
+ <option>ETK 人材紹介・派遣</option>
+ <option>ETK 直雇用</option>
+</select>
+<label>期間</label>
+<select id="periodSelect">
+ <option>今月</option>
+ <option>今日</option>
+ <option>今週</option>
+ <option>四半期</option>
+ <option>半期</option>
+</select>
+<a class="nav-item active" href="#">📊 ダッシュボード</a>
+<a class="nav-item" href="#">📋 キャンペーン一覧</a>
+<a class="nav-item" href="#">📈 レポート</a>
+<a class="nav-item" href="#">⚙️ 設定</a>
+</aside>
+
+<main class="main">
+<div class="header">
+ <h1>ポートフォリオ ダッシュボード</h1>
+</div>
+<p class="meta">集計期間: 2026/06/01 〜 2026/06/21 ｜ 最終更新: 2026/06/21 14:30</p>
+
+<div class="filters">
+ <button>今日</button><button>今週</button><button class="active">今月</button><button>四半期</button><button>半期</button>
+</div>
+
+<div class="kpi-grid">
+ <div class="kpi-card">
+  <div class="label">総費用</div>
+  <div class="value">¥1,284,500</div>
+  <span class="change up">▲ 12% 前月比</span>
+  <div class="target">目標: ¥1,500,000 <span class="edit-icon" title="目標編集">✏️</span></div>
+ </div>
+ <div class="kpi-card">
+  <div class="label">総クリック</div>
+  <div class="value">8,432</div>
+  <span class="change up">▲ 8% 前月比</span>
+  <div class="target">目標: 10,000 <span class="edit-icon" title="目標編集">✏️</span></div>
+ </div>
+ <div class="kpi-card">
+  <div class="label">総応募数</div>
+  <div class="value">312</div>
+  <span class="change up">▲ 15% 前月比</span>
+  <div class="target">目標: 400 <span class="edit-icon" title="目標編集">✏️</span></div>
+ </div>
+ <div class="kpi-card">
+  <div class="label">平均CPA</div>
+  <div class="value">¥4,117</div>
+  <span class="change down">▼ 5% 前月比</span>
+  <div class="target">目標: ¥3,500 <span class="edit-icon" title="目標編集">✏️</span></div>
+ </div>
+ <div class="kpi-card">
+  <div class="label">平均CTR</div>
+  <div class="value">3.2%</div>
+  <span class="change up">▲ 0.3pt</span>
+  <div class="target">目標: 3.5% <span class="edit-icon" title="目標編集">✏️</span></div>
+ </div>
+</div>
+
+<div class="charts-grid">
+ <div class="chart-card"><h3>費用推移（日別）</h3><canvas id="chartCost"></canvas></div>
+ <div class="chart-card"><h3>クリック推移（日別）</h3><canvas id="chartClicks"></canvas></div>
+ <div class="chart-card"><h3>応募推移（日別）</h3><canvas id="chartApply"></canvas></div>
+ <div class="chart-card"><h3>CPA推移（日別）</h3><canvas id="chartCPA"></canvas></div>
+</div>
+</main>
+
+<script>
+const labels = Array.from({length:21},(_,i)=>`6/${i+1}`);
+const rand=(min,max,n)=>Array.from({length:n},()=>Math.floor(Math.random()*(max-min)+min));
+const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
+const clients=['ETK & Co.','ETK JBSA','ETK 人材紹介・派遣','ETK 直雇用'];
+const colors=['#2557a7','#f59e0b','#10b981','#8b5cf6'];
+
+function makeDatasets(min,max){
+ return clients.map((c,i)=>({label:c,data:rand(min,max,21),borderColor:colors[i],backgroundColor:colors[i]+'20',borderWidth:2,tension:.3,fill:true,pointRadius:0}));
+}
+
+new Chart(document.getElementById('chartCost'),{type:'line',data:{labels,datasets:makeDatasets(10000,30000)},options:opts});
+new Chart(document.getElementById('chartClicks'),{type:'line',data:{labels,datasets:makeDatasets(50,200)},options:opts});
+new Chart(document.getElementById('chartApply'),{type:'line',data:{labels,datasets:makeDatasets(2,20)},options:opts});
+new Chart(document.getElementById('chartCPA'),{type:'line',data:{labels,datasets:makeDatasets(2500,6000)},options:opts});
+</script>
+</body>
+</html>

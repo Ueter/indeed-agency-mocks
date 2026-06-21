@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ポートフォリオ概況 - Indeed（Dark）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#1a1a2e;color:#e8e8e8;font-size:12px;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+.top-bar{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #2557a7;padding-bottom:10px;margin-bottom:16px}
+.top-bar h1{font-size:20px;font-weight:800;color:#fff}
+.top-bar .period{font-size:11px;color:#8899aa;margin-top:2px}
+.top-bar .updated{text-align:right;font-size:10px;color:#667;line-height:1.3}
+.top-bar .updated strong{font-size:13px;color:#2557a7}
+.kpi-row{display:flex;gap:0;margin-bottom:16px;border:1px solid #2a2a4a;border-radius:4px;overflow:hidden;background:#16213e}
+.kpi-box{flex:1;padding:12px 8px;border-right:1px solid #2a2a4a;text-align:center}
+.kpi-box:last-child{border-right:none}
+.kpi-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#6688aa;margin-bottom:2px}
+.kpi-value{font-size:20px;font-weight:700;color:#fff}
+.kpi-sub{font-size:9px;color:#667;margin-top:1px}
+.kpi-compare{font-size:9px;margin-top:2px;font-weight:600}
+.up{color:#27ae60}
+.down{color:#e74c3c}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.chart-box{border:1px solid #2a2a4a;border-radius:4px;padding:12px;background:#16213e}
+.chart-box h3{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#6688aa;margin-bottom:8px}
+.data-section{margin-bottom:16px}
+.data-section h2{font-size:12px;font-weight:700;color:#2557a7;border-bottom:1px solid #2a2a4a;padding-bottom:4px;margin-bottom:8px}
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:#6688aa;text-align:right;padding:3px 6px;font-weight:600}
+th:first-child{text-align:left}
+td{padding:4px 6px;text-align:right;border-bottom:1px solid #1e1e3a;font-variant-numeric:tabular-nums;font-size:11px}
+td:first-child{text-align:left;font-weight:600;color:#ccc}
+tr:hover td{background:#1e2a4a}
+.clients{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.client-card{border:1px solid #2a2a4a;border-radius:4px;padding:10px;background:#16213e}
+.client-card.warn{border-left:3px solid #e67e22}
+.client-card.ok{border-left:3px solid #27ae60}
+.client-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.client-header h4{font-size:12px;font-weight:700;color:#fff}
+.status{font-size:9px;font-weight:600;padding:2px 5px;border-radius:2px}
+.status-ok{background:#1a4a2a;color:#27ae60}
+.status-warn{background:#4a3a1a;color:#e67e22}
+.client-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;font-size:10px}
+.client-stats dt{color:#6688aa}
+.client-stats dd{font-weight:600;margin-bottom:3px;color:#ccc}
+.bar{height:3px;background:#2a2a4a;border-radius:2px;margin-top:6px}
+.bar-fill{height:3px;border-radius:2px;background:#2557a7}
+.client-alert{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:10px;color:#aaa}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-red{background:#e74c3c}
+.dot-yellow{background:#e67e22}
+.dot-green{background:#27ae60}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top-bar">
+  <div>
+    <h1>ポートフォリオ概況</h1>
+    <span class="period">集計期間: 2026/06/01 — 06/20（20日間）</span>
+  </div>
+  <div class="updated">Last updated<br><strong>06/20 09:00</strong></div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi-box">
+    <div class="kpi-label">費用（今月）</div>
+    <div class="kpi-value">¥2.85M</div>
+    <div class="kpi-sub">着地¥4.75M / 予算¥5M</div>
+    <div class="kpi-compare up">前週比 +12%</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">クリック</div>
+    <div class="kpi-value">34,200</div>
+    <div class="kpi-sub">着地57K / 目標60K</div>
+    <div class="kpi-compare up">前週比 +8%</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">応募</div>
+    <div class="kpi-value">847</div>
+    <div class="kpi-sub">着地1,412 / 目標1,500</div>
+    <div class="kpi-compare up">前週比 +5%</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">CVR</div>
+    <div class="kpi-value">2.5%</div>
+    <div class="kpi-sub">目標2.5%</div>
+    <div class="kpi-compare">前週比 ±0</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">CPA</div>
+    <div class="kpi-value">¥9,520</div>
+    <div class="kpi-sub down">目標¥9,000</div>
+    <div class="kpi-compare down">前週比 +3%</div>
+  </div>
+</div>
+
+<div class="charts">
+  <div class="chart-box"><h3>日別費用推移（今月）</h3><canvas id="costChart" height="120"></canvas></div>
+  <div class="chart-box"><h3>クライアント別費用構成</h3><canvas id="pieChart" height="120"></canvas></div>
+  <div class="chart-box"><h3>クリック数推移（アカウント別）</h3><canvas id="clickChart" height="120"></canvas></div>
+  <div class="chart-box"><h3>CPA推移（アカウント別）</h3><canvas id="cpaChart" height="120"></canvas></div>
+</div>
+
+<div class="data-section">
+  <h2>期間別パフォーマンス</h2>
+  <table>
+    <tr><th></th><th>費用</th><th>消化率</th><th>着地</th><th>Click</th><th>応募</th><th>CVR</th><th>CPA</th></tr>
+    <tr><td>今日</td><td>¥82K</td><td>49%</td><td>¥164K</td><td>980</td><td>23</td><td>2.3%</td><td class="down">¥9,852</td></tr>
+    <tr><td>今週</td><td>¥412K</td><td>49%</td><td>¥840K</td><td>4,920</td><td>112</td><td>2.3%</td><td class="down">¥9,821</td></tr>
+    <tr><td>今月</td><td>¥2.85M</td><td>57%</td><td>¥4.75M</td><td>34,200</td><td>847</td><td>2.5%</td><td class="down">¥9,520</td></tr>
+    <tr><td>四半期</td><td>¥9.2M</td><td>61%</td><td>¥14.8M</td><td>110K</td><td>2,580</td><td>2.3%</td><td class="down">¥9,640</td></tr>
+    <tr><td>半期</td><td>¥18.4M</td><td>61%</td><td>¥29.6M</td><td>220K</td><td>5,160</td><td>2.3%</td><td class="down">¥9,580</td></tr>
+  </table>
+</div>
+
+<div class="data-section"><h2>クライアント別</h2></div>
+<div class="clients">
+  <div class="client-card ok">
+    <div class="client-header"><h4>ETK & Co.</h4><span class="status status-ok">順調</span></div>
+    <div class="client-stats">
+      <div><dt>費用</dt><dd>¥1.32M / ¥2M</dd></div>
+      <div><dt>Click</dt><dd>4,800</dd></div>
+      <div><dt>応募</dt><dd>134</dd></div>
+      <div><dt>CVR</dt><dd>2.8%</dd></div>
+      <div><dt>CPA</dt><dd>¥9,851</dd></div>
+      <div><dt>消化率</dt><dd>66%</dd></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:66%"></div></div>
+    <div class="client-alert"><span class="dot dot-green"></span> 全指標目標内</div>
+  </div>
+  <div class="client-card ok">
+    <div class="client-header"><h4>ETK JBSA</h4><span class="status status-ok">順調</span></div>
+    <div class="client-stats">
+      <div><dt>費用</dt><dd>¥810K / ¥1.5M</dd></div>
+      <div><dt>Click</dt><dd>3,200</dd></div>
+      <div><dt>応募</dt><dd>89</dd></div>
+      <div><dt>CVR</dt><dd>2.8%</dd></div>
+      <div><dt>CPA</dt><dd>¥9,101</dd></div>
+      <div><dt>消化率</dt><dd>54%</dd></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:54%"></div></div>
+    <div class="client-alert"><span class="dot dot-green"></span> 全指標目標内</div>
+  </div>
+  <div class="client-card warn">
+    <div class="client-header"><h4>ETK 人材紹介・派遣</h4><span class="status status-warn">要注意</span></div>
+    <div class="client-stats">
+      <div><dt>費用</dt><dd>¥480K / ¥1M</dd></div>
+      <div><dt>Click</dt><dd>1,800</dd></div>
+      <div><dt>応募</dt><dd>38</dd></div>
+      <div><dt>CVR</dt><dd>2.1%</dd></div>
+      <div><dt>CPA</dt><dd>¥12,632</dd></div>
+      <div><dt>消化率</dt><dd>48%</dd></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:48%;background:#e67e22"></div></div>
+    <div class="client-alert"><span class="dot dot-red"></span> 着地¥800K（目標¥1M未達見込み）</div>
+    <div class="client-alert"><span class="dot dot-red"></span> CVR 2.1% → CPA悪化</div>
+  </div>
+  <div class="client-card warn">
+    <div class="client-header"><h4>ETK 直雇用</h4><span class="status status-warn">要注意</span></div>
+    <div class="client-stats">
+      <div><dt>費用</dt><dd>¥237K / ¥500K</dd></div>
+      <div><dt>Click</dt><dd>1,100</dd></div>
+      <div><dt>応募</dt><dd>28</dd></div>
+      <div><dt>CVR</dt><dd>2.5%</dd></div>
+      <div><dt>CPA</dt><dd>¥8,471</dd></div>
+      <div><dt>消化率</dt><dd>47%</dd></div>
+    </div>
+    <div class="bar"><div class="bar-fill" style="width:47%;background:#e67e22"></div></div>
+    <div class="client-alert"><span class="dot dot-yellow"></span> 消化ペース遅れ（47%）</div>
+  </div>
+</div>
+
+</div>
+<script>
+Chart.defaults.color='#8899aa';Chart.defaults.borderColor='#2a2a4a';
+const D=Array.from({length:20},(_,i)=>`6/${i+1}`);
+const cost=[140,155,148,162,170,145,130,158,175,168,182,190,155,148,165,172,180,160,152,164];
+const cETK=[600,650,620,700,720,610,560,680,740,710,770,800,650,620,700,730,760,680,650,700];
+const cJBSA=[400,440,420,460,480,410,370,450,490,470,510,530,440,420,460,480,500,450,430,460];
+const cJinzai=[300,330,320,340,360,310,280,330,370,360,380,400,330,320,340,360,380,340,320,350];
+const cChoku=[200,230,220,220,240,220,190,220,250,240,260,270,230,220,250,250,260,230,220,240];
+const aETK=[9500,9200,9400,9100,9000,9400,9700,9100,8900,9100,8800,8700,9200,9400,9100,9000,8900,9100,9200,9851];
+const aJBSA=[9800,9500,9700,9400,9300,9700,10000,9400,9200,9400,9100,9000,9500,9700,9400,9300,9200,9400,9500,9101];
+const aJinzai=[12000,11800,12200,11500,11400,12000,12500,11600,11200,11500,11000,10900,11800,12000,11500,11400,11200,11600,11800,12632];
+const aChoku=[9000,8700,8800,8500,8400,8800,9200,8600,8300,8600,8200,8100,8700,8800,8500,8400,8300,8500,8600,8471];
+
+new Chart(document.getElementById('costChart'),{type:'bar',data:{labels:D,datasets:[{data:cost.map(v=>v*1000),backgroundColor:'#2557a7',borderRadius:2}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>'¥'+(v/1000)+'K'}}}}});
+new Chart(document.getElementById('pieChart'),{type:'doughnut',data:{labels:['ETK & Co.','ETK JBSA','人材紹介・派遣','直雇用'],datasets:[{data:[1320,810,480,237],backgroundColor:['#2557a7','#4a90d9','#7fb3e8','#b8d4f0']}]},options:{plugins:{legend:{position:'right',labels:{font:{size:10},color:'#aab'}}}}});
+new Chart(document.getElementById('clickChart'),{type:'line',data:{labels:D,datasets:[{label:'ETK',data:cETK,borderColor:'#2557a7',borderWidth:1.5,pointRadius:0,tension:.3},{label:'JBSA',data:cJBSA,borderColor:'#4a90d9',borderWidth:1.5,pointRadius:0,tension:.3},{label:'人材紹介',data:cJinzai,borderColor:'#7fb3e8',borderWidth:1.5,pointRadius:0,tension:.3},{label:'直雇用',data:cChoku,borderColor:'#b8d4f0',borderWidth:1.5,pointRadius:0,tension:.3}]},options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{grid:{display:false}}}}});
+new Chart(document.getElementById('cpaChart'),{type:'line',data:{labels:D,datasets:[{label:'ETK',data:aETK,borderColor:'#2557a7',borderWidth:1.5,pointRadius:0,tension:.3},{label:'JBSA',data:aJBSA,borderColor:'#4a90d9',borderWidth:1.5,pointRadius:0,tension:.3},{label:'人材紹介',data:aJinzai,borderColor:'#7fb3e8',borderWidth:1.5,pointRadius:0,tension:.3},{label:'直雇用',data:aChoku,borderColor:'#b8d4f0',borderWidth:1.5,pointRadius:0,tension:.3},{label:'目標',data:Array(20).fill(9000),borderColor:'#e74c3c',borderWidth:1,borderDash:[4,4],pointRadius:0}]},options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{ticks:{callback:v=>'¥'+v.toLocaleString()},grid:{display:false}}}}});
+</script>
+</body>
+</html>
