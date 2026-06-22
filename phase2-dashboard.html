@@ -106,11 +106,22 @@ canvas{width:100%!important;height:250px!important}
 </div>
 
 <div class="kpi-grid" id="kpiGrid"></div>
+
+<div class="chart-card" style="margin-bottom:24px;padding:20px;border:2px solid var(--primary);border-radius:12px;box-shadow:0 4px 16px rgba(37,87,167,.12)">
+ <h3 style="font-size:16px;color:var(--primary);margin-bottom:14px">📊 予算目標 進捗（当月）</h3>
+ <canvas id="chartBudgetProgress" style="height:220px!important"></canvas>
+</div>
+
 <div class="charts-grid">
  <div class="chart-card"><h3>費用推移（日別）</h3><canvas id="chartCost"></canvas></div>
  <div class="chart-card"><h3>クリック推移（日別）</h3><canvas id="chartClicks"></canvas></div>
  <div class="chart-card"><h3>応募推移（日別）</h3><canvas id="chartApply"></canvas></div>
  <div class="chart-card"><h3>CPA推移（日別）</h3><canvas id="chartCPA"></canvas></div>
+</div>
+
+<div class="charts-grid">
+ <div class="chart-card"><h3>企業別 費用比較</h3><canvas id="chartBarCost"></canvas></div>
+ <div class="chart-card"><h3>企業別 応募数比較</h3><canvas id="chartBarApply"></canvas></div>
 </div>
 
 <div class="company-section">
@@ -336,8 +347,34 @@ document.getElementById('accountFilters').addEventListener('click',e=>{
   renderKPIs();renderCharts();
 });
 
+// ===== BUDGET PROGRESS CHART =====
+let budgetChart=null;
+function renderBudgetProgress(){
+  const budgets=[{name:'ETK & Co.',budget:2000000,spent:1320000},{name:'ETK JBSA',budget:1200000,spent:810000},{name:'人材紹介・派遣',budget:700000,spent:480000},{name:'直雇用',budget:350000,spent:237000}];
+  const dayProgress=21/30;// 月の21/30日経過
+  const labels=budgets.map(b=>b.name);
+  const pctSpent=budgets.map(b=>Math.round(b.spent/b.budget*100));
+  const pctExpected=budgets.map(()=>Math.round(dayProgress*100));
+  if(budgetChart)budgetChart.destroy();
+  budgetChart=new Chart(document.getElementById('chartBudgetProgress'),{type:'bar',data:{labels,datasets:[
+    {label:'消化率 %',data:pctSpent,backgroundColor:pctSpent.map((v,i)=>v>pctExpected[i]+10?'#ef4444':v<pctExpected[i]-10?'#f59e0b':'#10b981'),borderRadius:4,barPercentage:0.6},
+    {label:'想定ペース %',data:pctExpected,backgroundColor:'rgba(37,87,167,0.15)',borderColor:'#2557a7',borderWidth:1,borderRadius:4,barPercentage:0.6}
+  ]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+ctx.raw+'%'}}},scales:{x:{max:100,grid:{color:'#f0f0f0'},ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}}}});
+}
+
+// ===== BAR CHARTS =====
+let barCharts={cost:null,apply:null};
+function renderBarCharts(){
+  const names=COMPANIES.map(c=>c.name);
+  const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}};
+  if(barCharts.cost)barCharts.cost.destroy();
+  barCharts.cost=new Chart(document.getElementById('chartBarCost'),{type:'bar',data:{labels:names,datasets:[{data:COMPANIES.map(c=>c.cost),backgroundColor:colors}]},options:opts});
+  if(barCharts.apply)barCharts.apply.destroy();
+  barCharts.apply=new Chart(document.getElementById('chartBarApply'),{type:'bar',data:{labels:names,datasets:[{data:COMPANIES.map(c=>c.applies),backgroundColor:colors}]},options:opts});
+}
+
 // ===== INIT =====
-renderKPIs();renderCharts();renderCompanyTable();
+renderKPIs();renderBudgetProgress();renderCharts();renderBarCharts();renderCompanyTable();
 </script>
 </body>
 </html>
