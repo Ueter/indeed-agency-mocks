@@ -135,10 +135,10 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <!-- 求人別 予算消化進捗（横棒グラフ） -->
-<div class="chart-card" style="margin-bottom:20px">
-  <h3>求人別 予算消化進捗</h3>
+<div style="background:var(--card);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:20px">
+  <h3 style="font-size:13px;margin-bottom:10px">求人別 予算消化進捗</h3>
   <p style="font-size:11px;color:var(--gray);margin-bottom:12px">棒: 実消化額 ｜ 破線: 日割り目標ライン（21日/30日 = 70%）</p>
-  <canvas id="chartBudgetProgress" style="width:100%!important;height:160px!important"></canvas>
+  <div style="height:180px"><canvas id="chartBudgetProgress"></canvas></div>
 </div>
 
 <!-- アラート -->
@@ -150,13 +150,13 @@ tr:last-child td{border-bottom:none}
   <div class="alert-item"><span class="dot dot-yellow"></span><div><strong>CPC上昇傾向</strong> — 「キャリアアドバイザー」CPC ¥269（先週比+15%）。競合入札強化の可能性。</div></div>
 </div>
 
-<!-- 提案 -->
+<!-- 注目ポイント -->
 <div class="suggest-card">
-  <h3>💡 改善提案</h3>
-  <div class="suggest-item"><strong>1. 「派遣コーディネーター」の原稿改善</strong>CVR 2.0%と最低。タイトルに年収・勤務地を明記し、応募導線を簡素化してCVR改善を図る。</div>
-  <div class="suggest-item"><strong>2. 予算再配分</strong>CPA良好な「法人営業」「事務スタッフ」に予算を寄せ、全体CPA改善。</div>
-  <div class="suggest-item"><strong>3. 入札調整</strong>CPC上昇中の「キャリアアドバイザー」で時間帯別パフォーマンスを分析し、低効率帯の入札を抑制。</div>
-  <div class="suggest-item"><strong>4. 消化ペース回復</strong>月末に向け「法人営業」「事務スタッフ」の露出強化で消化ペースを上げる。</div>
+  <h3>📌 注目ポイント</h3>
+  <div class="suggest-item"><strong>1. 「派遣コーディネーター」CVR 2.0% — 4求人中最低</strong>目標2.5%に対し0.5pt下回り。CPA ¥13,333に直結。</div>
+  <div class="suggest-item"><strong>2. 「キャリアアドバイザー」CPA ¥14,000 — 全求人中最悪</strong>CVR 1.9%かつCPC上昇傾向（先週比+15%）。</div>
+  <div class="suggest-item"><strong>3. 「法人営業」CPA ¥11,111 — 相対的に良好</strong>CVR 2.3%で4求人中最高。予算消化率50%。</div>
+  <div class="suggest-item"><strong>4. 全体消化率48% / 理想70% — 月末未達見込み</strong>現ペースでは着地¥800K（目標¥1M比▼20%）。</div>
 </div>
 
 <!-- グラフ -->
