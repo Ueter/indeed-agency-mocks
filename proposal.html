@@ -240,6 +240,32 @@ p{margin-bottom:16px}
   </div>
 </div>
 
+<!-- 実現可能性 -->
+<div class="section section-alt">
+  <h2>実現可能性の確認状況</h2>
+  <p class="section-sub">API仕様を事前調査し、各フェーズの技術的裏付けを確認済みです</p>
+
+  <table class="price-table" style="margin-bottom:24px">
+    <thead><tr><th>機能</th><th>対応API</th><th>確認状況</th></tr></thead>
+    <tbody>
+      <tr><td>費用・クリック・応募等の取得</td><td>Sponsored Jobs API</td><td>✅ 確認済み</td></tr>
+      <tr><td>キャンペーン一覧・予算情報</td><td>Sponsored Jobs API</td><td>✅ 確認済み</td></tr>
+      <tr><td>求人一覧・ステータス確認</td><td>Job Update API (GraphQL)</td><td>✅ 確認済み</td></tr>
+      <tr><td>求人情報の更新</td><td>Job Update API (GraphQL)</td><td>✅ 確認済み（無料）</td></tr>
+      <tr><td>レポート生成・PDF配信</td><td>（API不要・サーバー側で処理）</td><td>✅ 確認済み</td></tr>
+      <tr><td>CPC・予算の操作</td><td>Sponsored Jobs API (write)</td><td>🟡 Partner申請後に確認</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Partner申請後に確認する事項</h3>
+  <ul style="font-size:14px;color:var(--gray);margin-left:18px;line-height:2">
+    <li>Sponsored Jobs APIの利用条件の最終確認（広告費規模に応じて無料になる条件あり）</li>
+    <li>キャンペーン操作系APIの詳細仕様（Phase 3向け）</li>
+    <li>Sandbox環境での接続テスト</li>
+  </ul>
+  <p style="font-size:13px;color:var(--gray);margin-top:16px">※ Phase 1〜2に必要なデータ取得は全て仕様上確認済みです。Partner申請承認後、実環境での検証を経て開発着手します。</p>
+</div>
+
 <!-- 前提条件 -->
 <div class="section section-alt">
   <h2>前提条件</h2>
