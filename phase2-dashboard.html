@@ -315,7 +315,9 @@ document.getElementById('closePanel').addEventListener('click',closeDrill);
 document.getElementById('overlay').addEventListener('click',closeDrill);
 document.getElementById('companyBody').addEventListener('click',e=>{
   const tr=e.target.closest('tr');if(!tr)return;
-  openDrill(tr.dataset.id);
+  const id=tr.dataset.id;
+  const drillPages={etk:'phase2-drilldown-etk.html',jbsa:'phase2-drilldown-jbsa.html',haken:'phase2-drilldown-jinzai.html',direct:'phase2-drilldown-choku.html'};
+  if(drillPages[id]){window.location.href=drillPages[id];}else{openDrill(id);}
 });
 
 // ===== FILTER HANDLERS =====

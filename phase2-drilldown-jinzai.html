@@ -134,6 +134,13 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
+<!-- 求人別 予算消化進捗（横棒グラフ） -->
+<div class="chart-card" style="margin-bottom:20px">
+  <h3>求人別 予算消化進捗</h3>
+  <p style="font-size:11px;color:var(--gray);margin-bottom:12px">棒: 実消化額 ｜ 破線: 日割り目標ライン（21日/30日 = 70%）</p>
+  <canvas id="chartBudgetProgress" style="width:100%!important;height:160px!important"></canvas>
+</div>
+
 <!-- アラート -->
 <div class="alert-card">
   <h3>⚠ アラート（4件）</h3>
@@ -234,6 +241,63 @@ new Chart(document.getElementById('chartClickApply'), {
 new Chart(document.getElementById('chartPie'), {
   type:'doughnut', data:{labels:['派遣コーディネーター','キャリアアドバイザー','法人営業','事務スタッフ'],datasets:[{data:[160,140,100,80],backgroundColor:['#ef4444','#f59e0b','#2557a7','#10b981']}]},
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
+});
+
+// 求人別 予算消化進捗（横棒グラフ＋日割り目標補助線）
+const budgetLabels = ['派遣コーディネーター','キャリアアドバイザー','法人営業','事務スタッフ'];
+const budgetTotal = [340, 300, 200, 160]; // 各求人の月予算(K)
+const budgetSpent = [160, 140, 100, 80];  // 消化額(K)
+const dailyTarget = budgetTotal.map(b => Math.round(b * 21 / 30)); // 日割り目標(21日経過/30日)
+
+new Chart(document.getElementById('chartBudgetProgress'), {
+  type:'bar',
+  data:{
+    labels: budgetLabels,
+    datasets:[
+      {label:'消化額',data:budgetSpent,backgroundColor:budgetSpent.map((v,i)=>v<dailyTarget[i]?'#f59e0b':'#2557a7'),borderRadius:4,barPercentage:0.5}
+    ]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>'消化: ¥'+ctx.raw+'K / 目標: ¥'+dailyTarget[ctx.dataIndex]+'K'}}
+    },
+    scales:{
+      x:{beginAtZero:true,max:Math.max(...budgetTotal),ticks:{callback:v=>'¥'+v+'K'},grid:{color:'#f0f0f0'}},
+      y:{grid:{display:false}}
+    }
+  },
+  plugins:[{
+    id:'dailyTargetMarker',
+    afterDraw(chart){
+      const ctx = chart.ctx;
+      const meta = chart.getDatasetMeta(0);
+      ctx.save();
+      meta.data.forEach((bar,i)=>{
+        const x = chart.scales.x.getPixelForValue(dailyTarget[i]);
+        const y = bar.y;
+        const h = bar.height;
+        // 破線マーカー
+        ctx.setLineDash([4,3]);
+        ctx.strokeStyle='#1a1a1a';
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.moveTo(x, y - h*0.6);
+        ctx.lineTo(x, y + h*0.6);
+        ctx.stroke();
+        // ラベル
+        ctx.setLineDash([]);
+        ctx.fillStyle='#666';
+        ctx.font='10px sans-serif';
+        ctx.textAlign='center';
+        ctx.fillText('¥'+dailyTarget[i]+'K', x, y - h*0.6 - 4);
+      });
+      ctx.restore();
+    }
+  }]
 });
 </script>
 </body>
