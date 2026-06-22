@@ -5,329 +5,266 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indeed広告運用管理システム ご提案書</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
-.wrap { max-width: 900px; margin: 0 auto; padding: 48px 32px; }
-.cover { text-align: center; padding: 80px 0 60px; border-bottom: 3px solid #2557a7; margin-bottom: 48px; }
-.cover h1 { font-size: 32px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 8px; }
-.cover .subtitle { font-size: 16px; color: #555; margin-bottom: 40px; }
-.cover-meta { font-size: 14px; color: #555; line-height: 2; }
-.cover-meta strong { color: #1a1a1a; }
-section { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid #e0e0e0; }
-section:last-child { border-bottom: none; }
-h2 { font-size: 20px; font-weight: 700; color: #2557a7; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #2557a7; }
-h3 { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
-p { margin-bottom: 12px; }
-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; text-align: left; padding: 10px 12px; border-bottom: 2px solid #e0e0e0; font-weight: 600; }
-td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-tr:last-child td { border-bottom: none; }
-.phase-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 28px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-.phase-card h3 { color: #2557a7; font-size: 18px; margin-bottom: 6px; }
-.phase-card .phase-desc { color: #555; font-size: 14px; margin-bottom: 16px; }
-.phase-card h4 { font-size: 14px; font-weight: 700; margin: 16px 0 8px; color: #333; }
-.phase-card ul, .phase-card ol { margin-left: 20px; margin-bottom: 12px; }
-.phase-card li { margin-bottom: 4px; }
-.phase-cost { background: #f8f9fa; border-radius: 6px; padding: 12px 16px; margin-top: 16px; }
-.phase-cost td { padding: 6px 12px; border: none; }
-ul { margin-left: 20px; margin-bottom: 12px; }
-li { margin-bottom: 4px; }
-ol { margin-left: 20px; margin-bottom: 12px; }
-.summary-table th { text-align: center; }
-.summary-table td { text-align: center; }
-.summary-table td:first-child, .summary-table th:first-child { text-align: left; }
-.summary-table tfoot td { border-top: 2px solid #2557a7; font-weight: 700; }
-.gantt { margin: 24px 0; }
-.gantt-row { display: flex; align-items: center; margin-bottom: 10px; }
-.gantt-label { width: 100px; font-size: 13px; font-weight: 600; color: #333; flex-shrink: 0; }
-.gantt-track { flex: 1; height: 28px; background: #f5f5f5; border-radius: 4px; position: relative; }
-.gantt-bar { position: absolute; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 600; }
-.gantt-months { display: flex; margin-left: 100px; margin-bottom: 4px; }
-.gantt-months span { flex: 1; font-size: 11px; color: #888; text-align: center; }
-.contact { margin-top: 24px; background: #f8f9fa; border-radius: 6px; padding: 20px 24px; }
-.contact p { margin-bottom: 4px; font-size: 14px; }
-.note { font-size: 13px; color: #666; margin-top: 8px; }
-@media print {
-  body { font-size: 12px; }
-  .wrap { padding: 0; max-width: 100%; }
-  .phase-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
-  section { break-inside: avoid; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2557a7;--dark:#0d1b3e;--accent:#10b981;--warning:#f59e0b;--light:#f8fafc;--gray:#6b7280}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a2e;font-size:15px;line-height:1.8}
+
+/* 表紙 */
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 100%);color:#fff;padding:100px 40px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:#fff;clip-path:polygon(0 100%,100% 100%,100% 0,0 80%)}
+.hero h1{font-size:38px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero .subtitle{font-size:18px;opacity:.85;margin-bottom:40px}
+.hero-meta{font-size:14px;opacity:.7;line-height:2}
+
+/* セクション */
+.section{max-width:900px;margin:0 auto;padding:60px 32px}
+.section-alt{background:var(--light)}
+h2{font-size:28px;font-weight:800;color:var(--dark);margin-bottom:8px;letter-spacing:-0.5px}
+.section-sub{font-size:14px;color:var(--gray);margin-bottom:32px}
+h3{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:12px}
+p{margin-bottom:16px}
+
+/* 課題カード */
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.pain-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-top:3px solid var(--warning)}
+.pain-card .num{font-size:32px;font-weight:800;color:var(--warning);opacity:.4}
+.pain-card h4{font-size:14px;font-weight:700;margin:8px 0 4px}
+.pain-card p{font-size:13px;color:var(--gray);margin:0;line-height:1.5}
+
+/* モックプレビュー */
+.mock-preview{position:relative;margin:32px 0;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(37,87,167,.2);transition:transform .3s,box-shadow .3s}
+.mock-preview:hover{transform:translateY(-4px);box-shadow:0 12px 50px rgba(37,87,167,.3)}
+.mock-preview img{width:100%;display:block}
+.mock-preview .overlay-link{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,27,62,.6);opacity:0;transition:opacity .3s;text-decoration:none}
+.mock-preview:hover .overlay-link{opacity:1}
+.mock-preview .overlay-link span{background:#fff;color:var(--primary);padding:12px 28px;border-radius:30px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.mock-caption{text-align:center;font-size:13px;color:var(--gray);margin-top:12px}
+
+/* フェーズタイムライン */
+.timeline{position:relative;padding-left:40px;margin:24px 0}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--primary),var(--accent))}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-33px;top:4px;width:20px;height:20px;border-radius:50%;background:var(--primary);border:3px solid #fff;box-shadow:0 0 0 3px var(--primary)}
+.timeline-item.future::before{background:var(--accent);box-shadow:0 0 0 3px var(--accent)}
+.timeline-item h3{margin-bottom:4px}
+.timeline-item .desc{font-size:14px;color:var(--gray);margin-bottom:8px}
+.timeline-item .meta{display:flex;gap:16px;font-size:13px}
+.timeline-item .meta span{background:var(--light);padding:4px 12px;border-radius:20px;font-weight:600}
+
+/* 価格テーブル */
+.price-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.price-table th{background:var(--dark);color:#fff;padding:14px 16px;font-size:13px;text-align:center;font-weight:600}
+.price-table th:first-child{text-align:left}
+.price-table td{padding:14px 16px;text-align:center;border-bottom:1px solid #f0f0f0;font-size:14px}
+.price-table td:first-child{text-align:left;font-weight:600}
+.price-table tbody tr:hover{background:#f0f7ff}
+.price-table tfoot td{background:var(--primary);color:#fff;font-weight:700;font-size:15px;border:none}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--dark),var(--primary));color:#fff;padding:60px 40px;text-align:center;border-radius:16px;margin:32px auto;max-width:900px}
+.cta-section h2{color:#fff;margin-bottom:12px}
+.cta-section p{opacity:.85;margin-bottom:24px}
+.cta-btn{display:inline-block;background:#fff;color:var(--primary);padding:14px 36px;border-radius:30px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .2s,box-shadow .2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+
+/* ガントチャート */
+.gantt{margin:24px 0}
+.gantt-row{display:flex;align-items:center;margin-bottom:8px}
+.gantt-label{width:80px;font-size:12px;font-weight:700;color:var(--gray)}
+.gantt-track{flex:1;height:28px;background:#eef2f7;border-radius:14px;position:relative;overflow:hidden}
+.gantt-bar{position:absolute;height:100%;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;transition:width .5s}
+.gantt-months{display:flex;margin-left:80px;margin-bottom:4px}
+.gantt-months span{flex:1;font-size:11px;color:var(--gray);text-align:center}
+
+/* 前提条件 */
+.prereq{display:grid;grid-template-columns:auto 1fr auto;gap:8px 16px;align-items:center;font-size:14px}
+.prereq .num{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.prereq .status{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:600}
+.prereq .status.done{background:#d1fae5;color:#065f46}
+.prereq .status.wip{background:#fef3c7;color:#92400e}
+.prereq .status.todo{background:#f1f5f9;color:#64748b}
+
+/* フッター */
+.footer{text-align:center;padding:40px;font-size:13px;color:var(--gray)}
+
+@media(max-width:768px){
+  .hero h1{font-size:26px}
+  .pain-grid{grid-template-columns:1fr}
+  .price-table{font-size:12px}
+  .section{padding:40px 20px}
+}
+@media print{
+  .hero{padding:40px;background:var(--dark) !important;-webkit-print-color-adjust:exact}
+  .mock-preview{box-shadow:none;border:1px solid #ddd}
+  .cta-section{display:none}
 }
 </style>
 </head>
 <body>
-<div class="wrap">
 
 <!-- 表紙 -->
-<div class="cover">
-  <h1>Indeed広告運用管理システム<br>ご提案書</h1>
-  <p class="subtitle">運用管理業務の効率化・自動化のご提案</p>
-  <div class="cover-meta">
-    <p><strong>提出日:</strong> 2026年6月22日</p>
-    <p><strong>提出先:</strong> ETK &amp; Co.合同会社 御中</p>
-    <p><strong>提出元:</strong> 植田 善之</p>
+<div class="hero">
+  <h1>Indeed広告運用管理システム</h1>
+  <p class="subtitle">4アカウント一括管理 — リアルタイム可視化 — AI分析</p>
+  <div class="hero-meta">
+    <p>2026年6月22日 ｜ ETK & Co.合同会社 御中</p>
   </div>
 </div>
 
-<!-- 1. はじめに -->
-<section>
-  <h2>1. はじめに</h2>
-  <p>本提案書は、Indeed広告運用における管理業務の効率化・自動化を実現するシステムの開発についてご提案するものです。</p>
-  <p>現在、管理画面上で手作業にて実施されている業務（数値確認・レポート作成・キャンペーン操作等）を、Indeed公式APIを活用したシステムにより段階的に自動化し、運用品質の向上とコスト削減を実現します。</p>
-  <p><strong>対象アカウント:</strong></p>
-  <ul>
-    <li>ETK &amp; Co.</li>
-    <li>ETK JBSA</li>
-    <li>ETK 人材紹介・派遣</li>
-    <li>ETK 直雇用</li>
-  </ul>
-</section>
+<!-- 課題 -->
+<div class="section">
+  <h2>現状の課題</h2>
+  <p class="section-sub">4アカウント×複数キャンペーンの手動管理で発生している問題</p>
+  <div class="pain-grid">
+    <div class="pain-card"><div class="num">01</div><h4>確認に時間がかかる</h4><p>アカウントごとにログインして数値確認。全体像の把握に遅延。</p></div>
+    <div class="pain-card"><div class="num">02</div><h4>レポートが手作業</h4><p>週次・月次レポートを毎回手動作成。ヒューマンエラーのリスク。</p></div>
+    <div class="pain-card"><div class="num">03</div><h4>リアルタイム性がない</h4><p>予算超過・消化遅れに気づくのが遅い。機会損失が発生。</p></div>
+    <div class="pain-card"><div class="num">04</div><h4>操作が1件ずつ</h4><p>CPC調整・予算変更を手動で繰り返し。4社分は非効率。</p></div>
+    <div class="pain-card"><div class="num">05</div><h4>横断分析ができない</h4><p>全社合計・クライアント比較が手作業。最適配分が困難。</p></div>
+    <div class="pain-card"><div class="num">06</div><h4>システム連携なし</h4><p>HubSpotと広告データが分断。請求・進捗管理が二重作業。</p></div>
+  </div>
+</div>
 
-<!-- 2. 現状の課題 -->
-<section>
-  <h2>2. 現状の課題</h2>
-  <table>
-    <thead><tr><th style="width:32px;text-align:center">#</th><th>課題</th><th>影響</th></tr></thead>
+<!-- ソリューション：ダッシュボード -->
+<div class="section section-alt">
+  <h2>ソリューション</h2>
+  <p class="section-sub">Phase 1 — ダッシュボードで全てを一画面に</p>
+
+  <a href="phase2-dashboard.html" class="mock-preview">
+    <img src="screenshots/dashboard.png" alt="ダッシュボード画面">
+    <span class="overlay-link"><span>▶ 実際に操作する</span></span>
+  </a>
+  <p class="mock-caption">クリックすると実際のモックを操作できます</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px">
+    <div>
+      <h3>ポートフォリオ全体を一目で</h3>
+      <ul style="font-size:14px;color:var(--gray);margin-left:18px">
+        <li>4アカウントの費用・クリック・応募・CVR・CPA</li>
+        <li>期間フィルタ（今日〜半期）</li>
+        <li>トレンドグラフ＋目標乖離</li>
+        <li>アラート自動表示</li>
+      </ul>
+    </div>
+    <div>
+      <h3>個社ドリルダウン</h3>
+      <ul style="font-size:14px;color:var(--gray);margin-left:18px">
+        <li>クリックで個社詳細へ遷移</li>
+        <li>求人別パフォーマンス</li>
+        <li>予算消化進捗（横棒グラフ）</li>
+        <li>AI改善提案（Phase 2〜）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ドリルダウン -->
+<div class="section">
+  <h2>個社別ドリルダウン</h2>
+  <p class="section-sub">アラートの根拠と数字を深掘り</p>
+
+  <a href="phase2-drilldown-jinzai.html" class="mock-preview">
+    <img src="screenshots/drilldown.png" alt="ドリルダウン画面">
+    <span class="overlay-link"><span>▶ 実際に操作する</span></span>
+  </a>
+  <p class="mock-caption">「人材紹介・派遣」アカウントのドリルダウン例</p>
+</div>
+
+<!-- フェーズ計画 -->
+<div class="section section-alt">
+  <h2>開発ロードマップ</h2>
+  <p class="section-sub">段階的にシステムを拡張し、効果を確認しながら進行</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h3>Phase 1: ダッシュボード</h3>
+      <p class="desc">全アカウントの一括管理・リアルタイム可視化・アラート</p>
+      <div class="meta"><span>4週間</span><span>¥800,000</span></div>
+    </div>
+    <div class="timeline-item">
+      <h3>Phase 2: クライアント向けレポート自動生成</h3>
+      <p class="desc">クライアントへの週次・月次レポートをPDF/Web共有で自動配信</p>
+      <div class="meta"><span>3週間</span><span>¥500,000</span></div>
+    </div>
+    <div class="timeline-item">
+      <h3>Phase 3: 操作自動化 + HubSpot連携</h3>
+      <p class="desc">CPC調整・予算設定・求人投稿を一括操作。HubSpotとデータ連携</p>
+      <div class="meta"><span>5週間</span><span>¥1,200,000</span></div>
+    </div>
+    <div class="timeline-item future">
+      <h3>Phase 4: AI活用の運用自動化</h3>
+      <p class="desc">予算自動配分・異常検知・求人原稿最適化・採用単価最適化</p>
+      <div class="meta"><span>6週間</span><span>¥1,500,000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 費用 -->
+<div class="section">
+  <h2>費用・期間</h2>
+  <p class="section-sub">各フェーズ完了後に成果確認 → 次フェーズ着手の段階進行が可能</p>
+
+  <table class="price-table">
+    <thead><tr><th>フェーズ</th><th>期間</th><th>開発フィー</th><th>AWS月額</th></tr></thead>
     <tbody>
-      <tr><td style="text-align:center">1</td><td>クライアントごとに管理画面へログインし数値を確認</td><td>確認に時間がかかり、即時の判断が困難</td></tr>
-      <tr><td style="text-align:center">2</td><td>全社合計・横断比較が手作業</td><td>全体像の把握に遅延が生じる</td></tr>
-      <tr><td style="text-align:center">3</td><td>レポート作成が手動</td><td>定期的な工数発生、ヒューマンエラーのリスク</td></tr>
-      <tr><td style="text-align:center">4</td><td>キャンペーン操作を1件ずつ実施</td><td>4社×複数キャンペーンの操作に時間を要する</td></tr>
-      <tr><td style="text-align:center">5</td><td>予算消化状況の把握がリアルタイムでない</td><td>過剰消化・未消化に気づくのが遅れる</td></tr>
-      <tr><td style="text-align:center">6</td><td>クライアント情報・請求管理が分散</td><td>HubSpotと広告データが連動していない</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- 3. ご提案内容 -->
-<section>
-  <h2>3. ご提案内容（フェーズ別）</h2>
-
-  <!-- Phase 1 -->
-  <div class="phase-card">
-    <h3>Phase 1: ダッシュボード＋定期レポート</h3>
-    <p class="phase-desc">Webダッシュボードで全クライアントの運用状況をリアルタイム確認 ＋ 定期レポートをメール/チャットで自動配信</p>
-
-    <h4>ダッシュボード</h4>
-    <ul>
-      <li>PC・モバイル両対応（レスポンシブデザイン）</li>
-      <li>ポートフォリオ全体 → アカウント別 → 求人別のドリルダウン</li>
-      <li>期間フィルタ（今日/今週/今月/四半期/半期）</li>
-      <li>トレンドグラフ・目標との乖離をリアルタイム可視化</li>
-      <li>アラート表示（予算超過、CVR低下、CPA悪化等）</li>
-    </ul>
-
-    <h4>定期レポート自動送付</h4>
-    <ul>
-      <li>配信先: 代理店スタッフ</li>
-      <li>配信頻度: 1日数回（朝・昼・夕、設定可能）</li>
-      <li>配信手段: メール / Slack / LINE</li>
-      <li>ドリルダウン構造（全社合計 → アカウント別 → キャンペーン別）</li>
-    </ul>
-
-    <h4>主要指標</h4>
-    <ul>
-      <li>費用（設定予算 / 消化額 / 消化率 / 着地予測）</li>
-      <li>クリック数・応募数・CVR・CPA</li>
-      <li>目標値との差分表示</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tr><td><strong>開発期間</strong></td><td>4週間</td></tr>
-        <tr><td><strong>開発フィー</strong></td><td>¥800,000</td></tr>
-        <tr><td><strong>AWS月額費用</strong></td><td>¥3,000〜5,000/月</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 2 -->
-  <div class="phase-card">
-    <h3>Phase 2: クライアント向け自動レポート生成</h3>
-    <p class="phase-desc">クライアント担当者に提出するレポートを自動生成・配信</p>
-
-    <h4>実現すること</h4>
-    <ul>
-      <li>送り先: クライアント担当者</li>
-      <li>配信頻度: 週次 / 月次 / 四半期（任意設定可）</li>
-      <li>ブランディング対応（ロゴ・フォーマット統一）</li>
-      <li>PDF or Web共有リンクで配信</li>
-      <li>手作業でのExcel集計が不要に</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tr><td><strong>開発期間</strong></td><td>3週間</td></tr>
-        <tr><td><strong>開発フィー</strong></td><td>¥500,000</td></tr>
-        <tr><td><strong>AWS月額費用</strong></td><td>+¥1,000〜2,000/月</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 3 -->
-  <div class="phase-card">
-    <h3>Phase 3: 操作の自動化 + HubSpot連携</h3>
-    <p class="phase-desc">管理画面での手作業をシステムから一括・自動で実行し、HubSpotとのデータ連携で業務全体を統合</p>
-
-    <h4>Indeed操作の自動化</h4>
-    <table>
-      <thead><tr><th>操作</th><th>内容</th></tr></thead>
-      <tbody>
-        <tr><td>求人投稿</td><td>新規求人の一括投稿</td></tr>
-        <tr><td>求人修正</td><td>タイトル・説明文・給与・勤務地の更新</td></tr>
-        <tr><td>キャンペーン作成</td><td>新規キャンペーンの作成</td></tr>
-        <tr><td>CPC調整</td><td>クリック単価の変更</td></tr>
-        <tr><td>予算設定</td><td>日次/月次予算の設定・変更</td></tr>
-        <tr><td>停止・再開</td><td>キャンペーンの一時停止・再開</td></tr>
-      </tbody>
-    </table>
-
-    <h4>HubSpot連携</h4>
-    <ul>
-      <li>クライアント情報同期</li>
-      <li>応募→Deal自動作成</li>
-      <li>広告費→請求管理連動</li>
-      <li>ルールベース自動実行（例: 予算消化率80%超過で自動停止）</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tr><td><strong>開発期間</strong></td><td>5週間</td></tr>
-        <tr><td><strong>開発フィー</strong></td><td>¥1,200,000</td></tr>
-        <tr><td><strong>AWS月額費用</strong></td><td>+¥2,000〜4,000/月</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 4 -->
-  <div class="phase-card">
-    <h3>Phase 4: AI活用の運用・分析の自動化</h3>
-    <p class="phase-desc">蓄積データとAIを活用し、運用判断の自動化・最適化を実現</p>
-
-    <h4>想定機能</h4>
-    <ul>
-      <li>CPC・予算自動調整 — パフォーマンスデータに基づく最適入札</li>
-      <li>異常検知 — 不正クリック疑い・応募急減・コスト急増のアラート</li>
-      <li>求人原稿最適化 — AIによる原稿の自動生成・改善提案</li>
-      <li>予算自動配分 — 成果の良いキャンペーンへ自動シフト</li>
-      <li>HubSpotパイプラインデータを含めた真の採用単価最適化</li>
-    </ul>
-
-    <div class="phase-cost">
-      <table>
-        <tr><td><strong>開発期間</strong></td><td>6週間</td></tr>
-        <tr><td><strong>開発フィー</strong></td><td>¥1,500,000</td></tr>
-        <tr><td><strong>AWS月額費用</strong></td><td>+¥5,000〜10,000/月</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- Phase 5 -->
-  <div class="phase-card">
-    <h3>(Phase 5): 他代理店へのサービス展開</h3>
-    <p class="phase-desc">本システムで培ったノウハウと仕組みを、他の広告代理店向けにサービスとして展開</p>
-    <ul>
-      <li>運用代行サービス（BPO型）</li>
-      <li>※ Indeed API契約上、システム自体のSaaS提供には別途交渉が必要</li>
-    </ul>
-    <div class="phase-cost">
-      <table>
-        <tr><td><strong>開発期間</strong></td><td>要検討</td></tr>
-        <tr><td><strong>費用</strong></td><td>要検討</td></tr>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- 4. 費用・期間サマリー -->
-<section>
-  <h2>4. 費用・期間サマリー</h2>
-  <table class="summary-table">
-    <thead>
-      <tr><th>フェーズ</th><th>開発期間</th><th>開発フィー</th><th>AWS月額（増分）</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Phase 1: ダッシュボード＋定期レポート</td><td>4週間</td><td>¥800,000</td><td>¥3,000〜5,000</td></tr>
-      <tr><td>Phase 2: クライアント向けレポート</td><td>3週間</td><td>¥500,000</td><td>+¥1,000〜2,000</td></tr>
+      <tr><td>Phase 1: ダッシュボード</td><td>4週間</td><td>¥800,000</td><td>¥3,000〜5,000</td></tr>
+      <tr><td>Phase 2: レポート自動生成</td><td>3週間</td><td>¥500,000</td><td>+¥1,000〜2,000</td></tr>
       <tr><td>Phase 3: 操作自動化 + HubSpot</td><td>5週間</td><td>¥1,200,000</td><td>+¥2,000〜4,000</td></tr>
       <tr><td>Phase 4: AI活用</td><td>6週間</td><td>¥1,500,000</td><td>+¥5,000〜10,000</td></tr>
-      <tr><td>(Phase 5): 他代理店展開</td><td>—</td><td>—</td><td>—</td></tr>
     </tbody>
-    <tfoot>
-      <tr><td>合計（Phase 1〜4）</td><td>約18週間</td><td>¥4,000,000</td><td>¥11,000〜21,000/月</td></tr>
-    </tfoot>
+    <tfoot><tr><td>合計（Phase 1〜4）</td><td>約18週間</td><td>¥4,000,000</td><td>¥11,000〜21,000/月</td></tr></tfoot>
   </table>
-  <p class="note">※ 費用は概算の叩き台です。要件詳細化後に正式見積りを提示します。</p>
-  <p class="note">※ AWS月額費用はアカウント数4社・現在の利用想定規模に基づく見積りです。</p>
-  <p class="note">※ 各フェーズ完了後に成果確認 → 次フェーズ着手の段階進行が可能です。</p>
-</section>
+  <p style="font-size:13px;color:var(--gray)">※ 概算の叩き台です。要件詳細化後に正式見積りを提示します。<br>※ Phase 1のみの着手も可能です。</p>
+</div>
 
-<!-- 5. スケジュール -->
-<section>
-  <h2>5. スケジュール（案）</h2>
+<!-- スケジュール -->
+<div class="section section-alt">
+  <h2>スケジュール</h2>
+  <p class="section-sub">2026年7月着手想定（Partner申請承認後）</p>
   <div class="gantt">
     <div class="gantt-months"><span>7月</span><span>8月</span><span>9月</span><span>10月</span><span>11月</span><span>12月</span></div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 1</div>
-      <div class="gantt-track"><div class="gantt-bar" style="left:0;width:22%;background:#2557a7">4週</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 2</div>
-      <div class="gantt-track"><div class="gantt-bar" style="left:22%;width:17%;background:#3a6fb5">3週</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 3</div>
-      <div class="gantt-track"><div class="gantt-bar" style="left:39%;width:28%;background:#4d87c3">5週</div></div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-label">Phase 4</div>
-      <div class="gantt-track"><div class="gantt-bar" style="left:67%;width:33%;background:#609fd1">6週</div></div>
-    </div>
+    <div class="gantt-row"><div class="gantt-label">Phase 1</div><div class="gantt-track"><div class="gantt-bar" style="left:0;width:22%;background:var(--primary)">4週</div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Phase 2</div><div class="gantt-track"><div class="gantt-bar" style="left:22%;width:17%;background:#3a6fb5">3週</div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Phase 3</div><div class="gantt-track"><div class="gantt-bar" style="left:39%;width:28%;background:#4d87c3">5週</div></div></div>
+    <div class="gantt-row"><div class="gantt-label">Phase 4</div><div class="gantt-track"><div class="gantt-bar" style="left:67%;width:33%;background:var(--accent)">6週</div></div></div>
   </div>
-  <p class="note">※ 2026年7月着手想定。Partner申請承認後に開始。</p>
-  <p class="note">※ 各フェーズ間に1週間のレビュー・調整期間を含む。</p>
-</section>
-
-<!-- 6. 技術的裏付け -->
-<section>
-  <h2>6. 技術的裏付け</h2>
-  <table>
-    <tbody>
-      <tr><td><strong>利用API</strong></td><td>Indeed Job Update API (GraphQL) + Sponsored Jobs API (REST)</td></tr>
-      <tr><td><strong>認証方式</strong></td><td>OAuth 2.0 (client_credentials)</td></tr>
-      <tr><td><strong>インフラ</strong></td><td>AWS (Lambda, DynamoDB, S3, CloudWatch, EventBridge)</td></tr>
-      <tr><td><strong>外部連携</strong></td><td>HubSpot API</td></tr>
-      <tr><td><strong>API仕様確認</strong></td><td>完了済み — 全要件がAPI機能でカバー可能であることを確認</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- 7. 前提条件 -->
-<section>
-  <h2>7. 前提条件・必要なアクション</h2>
-  <table>
-    <thead><tr><th style="width:32px;text-align:center">#</th><th>必要事項</th><th>状態</th></tr></thead>
-    <tbody>
-      <tr><td style="text-align:center">1</td><td>Indeed Partner申請・承認</td><td>申請準備中</td></tr>
-      <tr><td style="text-align:center">2</td><td>Partner申請に必要な会社情報のご提供</td><td>確認中</td></tr>
-      <tr><td style="text-align:center">3</td><td>各クライアントのIndeedアカウント連携承認</td><td>未着手</td></tr>
-      <tr><td style="text-align:center">4</td><td>目標値の設定（全社/アカウント別/キャンペーン別）</td><td>未着手</td></tr>
-      <tr><td style="text-align:center">5</td><td>HubSpot APIアクセス権限（Phase 3以降）</td><td>未着手</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- 8. おわりに -->
-<section>
-  <h2>8. おわりに</h2>
-  <p>本提案は、現在手作業で実施されているIndeed広告運用管理を段階的にシステム化することで、業務効率の大幅な改善と運用品質の向上を実現するものです。</p>
-  <p>Phase 1から着手し、早期に効果を実感いただきながら、段階的に機能を拡張してまいります。</p>
-  <p>ご不明点・ご要望がございましたら、お気軽にご連絡ください。</p>
-  <div class="contact">
-    <p><strong>連絡先:</strong> 植田 善之</p>
-  </div>
-</section>
-
 </div>
+
+<!-- 技術基盤 -->
+<div class="section">
+  <h2>技術基盤</h2>
+  <p class="section-sub">Indeed公式API + AWS — 全要件の実現可能性を確認済み</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:14px">
+    <div style="background:var(--light);padding:16px;border-radius:8px"><strong>Indeed API</strong><br>Job Update API (GraphQL) + Sponsored Jobs API (REST)</div>
+    <div style="background:var(--light);padding:16px;border-radius:8px"><strong>認証</strong><br>OAuth 2.0 (client_credentials)</div>
+    <div style="background:var(--light);padding:16px;border-radius:8px"><strong>インフラ</strong><br>AWS Lambda, DynamoDB, S3, EventBridge</div>
+    <div style="background:var(--light);padding:16px;border-radius:8px"><strong>外部連携</strong><br>HubSpot API（Phase 3〜）</div>
+  </div>
+</div>
+
+<!-- 前提条件 -->
+<div class="section section-alt">
+  <h2>前提条件</h2>
+  <p class="section-sub">開始に必要なアクション</p>
+  <div class="prereq">
+    <span class="num">1</span><span>Indeed Partner申請・承認</span><span class="status wip">準備中</span>
+    <span class="num">2</span><span>会社情報のご提供（Partner申請用）</span><span class="status wip">確認中</span>
+    <span class="num">3</span><span>各クライアントのIndeedアカウント連携承認</span><span class="status todo">未着手</span>
+    <span class="num">4</span><span>目標値の設定（全社/アカウント別/キャンペーン別）</span><span class="status todo">未着手</span>
+    <span class="num">5</span><span>HubSpot APIアクセス権限（Phase 3〜）</span><span class="status todo">未着手</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>まずはPhase 1から始めませんか？</h2>
+  <p>4週間で全アカウントの一括管理ダッシュボードを構築。<br>早期に効果を実感いただけます。</p>
+  <a href="phase2-dashboard.html" class="cta-btn">▶ ダッシュボードを体験する</a>
+</div>
+
+<div class="footer">
+  <p>提出元: 植田 善之</p>
+</div>
+
 </body>
 </html>
