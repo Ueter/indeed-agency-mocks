@@ -36,6 +36,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;color:#cbd5e1;text-decoration:none;font-size:13px;border-radius:var(--radius-xs);margin-bottom:2px;transition:all .15s}
 .nav-item:hover{background:var(--sidebar-hover);color:#fff}
 .nav-item.active{background:var(--primary);color:#fff;font-weight:500}
+.nav-item.disabled{opacity:.4;pointer-events:none;position:relative}
+.nav-item.disabled::after{content:'Coming Soon';position:absolute;right:12px;font-size:9px;background:rgba(255,255,255,.15);padding:2px 6px;border-radius:4px;color:var(--gray-light)}
 .nav-item .icon{font-size:16px;width:20px;text-align:center}
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:var(--gray-light)}
 
@@ -162,19 +164,19 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     <div class="nav-section">
       <div class="nav-section-title">メイン</div>
       <a class="nav-item active" href="#"><span class="icon">📊</span>ダッシュボード</a>
-      <a class="nav-item" href="#"><span class="icon">📋</span>キャンペーン一覧</a>
-      <a class="nav-item" href="#"><span class="icon">🏢</span>企業管理</a>
+      <a class="nav-item disabled" href="#"><span class="icon">📋</span>キャンペーン一覧</a>
+      <a class="nav-item disabled" href="#"><span class="icon">🏢</span>企業管理</a>
     </div>
     <div class="nav-section">
       <div class="nav-section-title">分析</div>
-      <a class="nav-item" href="#"><span class="icon">📈</span>レポート</a>
-      <a class="nav-item" href="#"><span class="icon">🎯</span>目標管理</a>
-      <a class="nav-item" href="#"><span class="icon">👥</span>営業別実績</a>
+      <a class="nav-item disabled" href="#"><span class="icon">📈</span>レポート</a>
+      <a class="nav-item disabled" href="#"><span class="icon">🎯</span>目標管理</a>
+      <a class="nav-item disabled" href="#"><span class="icon">👥</span>営業別実績</a>
     </div>
     <div class="nav-section">
       <div class="nav-section-title">設定</div>
-      <a class="nav-item" href="#"><span class="icon">⚙️</span>設定</a>
-      <a class="nav-item" href="#"><span class="icon">🔔</span>アラート設定</a>
+      <a class="nav-item disabled" href="#"><span class="icon">⚙️</span>設定</a>
+      <a class="nav-item disabled" href="#"><span class="icon">🔔</span>アラート設定</a>
     </div>
   </nav>
   <div class="sidebar-footer">
