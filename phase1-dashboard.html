@@ -193,8 +193,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       <p class="subtitle">最終更新: 2026/07/31 12:45 ｜ 集計期間: 2026/07/01 〜 07/30（実データ）</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-outline">📥 エクスポート</button>
-      <button class="btn btn-primary">🔄 更新</button>
+      <button class="btn btn-primary" id="exportBtn">📥 エクスポート</button>
     </div>
   </div>
 
@@ -521,6 +520,30 @@ document.querySelector('#companyTable thead').addEventListener('click',e=>{
   renderTable();
 });
 renderTable();
+
+// ===== EXPORT CSV =====
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const headers = ['企業名','費用','クリック','応募','CVR','CPA','ステータス'];
+  const rows = COMPANIES.map(c => [
+    c.name,
+    c.cost,
+    c.clicks,
+    c.applies,
+    c.cvr + '%',
+    c.cpa,
+    c.cpa < 8000 ? '順調' : '要注意'
+  ]);
+  
+  const bom = '\uFEFF';
+  const csv = bom + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'indeed_report_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
 
 // ===== FILTER HANDLERS =====
 let currentPeriod = '今月';
