@@ -491,11 +491,71 @@ document.querySelector('#companyTable thead').addEventListener('click',e=>{
 renderTable();
 
 // ===== FILTER HANDLERS =====
+let currentPeriod = '今月';
+let currentAccount = '全体';
+
+// Period/Account multipliers for demo (simulates different views)
+const periodMultipliers = {'今日':0.033,'今週':0.23,'今月':1,'四半期':3.1,'半期':6.0};
+const accountShares = {'全体':1,'ETK':0.42,'JBSA':0.28,'人材紹介・派遣':0.18,'直雇用':0.12};
+
+function updateKPIs(){
+  const pm = periodMultipliers[currentPeriod] || 1;
+  const as = accountShares[currentAccount] || 1;
+  const factor = pm * as;
+  
+  const baseSpend = 25155619;
+  const baseClicks = 541680;
+  const baseApplies = 6035;
+  
+  const spend = Math.round(baseSpend * factor);
+  const clicks = Math.round(baseClicks * factor);
+  const applies = Math.round(baseApplies * factor);
+  const cpa = applies > 0 ? Math.round(spend / applies) : 0;
+  
+  const fmt = v => v >= 10000000 ? '¥' + (v/10000000).toFixed(2) + '億' : v >= 10000 ? '¥' + Math.round(v/10000).toLocaleString() + '万' : '¥' + v.toLocaleString();
+  
+  document.getElementById('kpiGrid').innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-icon blue">💰</div>
+      <div class="kpi-label">総費用（${currentPeriod}）</div>
+      <div class="kpi-value">${fmt(spend)}</div>
+      <span class="kpi-change up">${currentAccount}</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon blue">👆</div>
+      <div class="kpi-label">総クリック</div>
+      <div class="kpi-value">${clicks.toLocaleString()}</div>
+      <span class="kpi-change up">${currentPeriod}</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green">📝</div>
+      <div class="kpi-label">総応募数</div>
+      <div class="kpi-value">${applies.toLocaleString()}</div>
+      <span class="kpi-change up">${currentPeriod}</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon orange">🎯</div>
+      <div class="kpi-label">平均CPA</div>
+      <div class="kpi-value">¥${cpa.toLocaleString()}</div>
+      <span class="kpi-change ${cpa < 5000 ? 'up' : 'down'}">${cpa < 5000 ? '目標内' : '要改善'}</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon blue">🏢</div>
+      <div class="kpi-label">配信中企業</div>
+      <div class="kpi-value">${currentAccount === '全体' ? '200社' : Math.round(200 * as) + '社'}</div>
+      <span class="kpi-change up">/ 315社</span>
+    </div>`;
+}
+
 document.querySelectorAll('.pill-group').forEach(group=>{
   group.addEventListener('click',e=>{
     if(!e.target.classList.contains('pill'))return;
     group.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
     e.target.classList.add('active');
+    
+    if(group.id === 'periodFilters') currentPeriod = e.target.textContent;
+    if(group.id === 'accountFilters') currentAccount = e.target.textContent;
+    updateKPIs();
   });
 });
 </script>
