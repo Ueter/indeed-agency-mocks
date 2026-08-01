@@ -208,6 +208,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
         <button class="pill active">今月</button>
         <button class="pill">四半期</button>
         <button class="pill">半期</button>
+        <button class="pill">年間</button>
       </div>
     </div>
     <div class="filter-group">
@@ -526,7 +527,7 @@ let currentPeriod = '今月';
 let currentAccount = '全体';
 
 // Period/Account multipliers for demo (simulates different views)
-const periodMultipliers = {'今日':0.033,'今週':0.23,'今月':1,'四半期':3.1,'半期':6.0};
+const periodMultipliers = {'今日':0.033,'今週':0.23,'今月':1,'四半期':3.1,'半期':6.0,'年間':12.0};
 const accountShares = {'全体':1,'ETK':0.42,'JBSA':0.28,'人材紹介・派遣':0.18,'直雇用':0.12};
 
 function updateKPIs(){
