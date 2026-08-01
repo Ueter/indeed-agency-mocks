@@ -288,21 +288,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <!-- Sales Rep Section -->
   <div class="section-header">
     <h2>👥 営業担当別 売上実績</h2>
-    <span class="badge">当月</span>
+    <span class="badge">当月 ｜ 目標: ¥2,500万/人</span>
   </div>
-  <div class="sales-grid">
-    <div class="sales-card">
-      <div class="avatar">谷</div>
-      <div class="name">Tani</div>
-      <div class="amount">¥1,450万</div>
-      <div class="sub">120件管理 ｜ 達成率 108%</div>
-    </div>
-    <div class="sales-card">
-      <div class="avatar">新</div>
-      <div class="name">Niidoi</div>
-      <div class="amount">¥1,066万</div>
-      <div class="sub">80件管理 ｜ 達成率 95%</div>
-    </div>
+  <div class="budget-section" style="margin-bottom:24px">
+    <canvas id="chartSalesReps" style="height:140px!important"></canvas>
   </div>
 
   <!-- Monthly Trend -->
@@ -388,6 +377,48 @@ const monthlyApplies = [3610,4332,4419,4693,5316,6218,6267,6401,5277,4876,5625,6
 Chart.defaults.font.family = "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
 Chart.defaults.font.size = 11;
 Chart.defaults.color = '#64748b';
+
+// ===== SALES REP CHART =====
+(function(){
+  const target = 2500; // 万円/人
+  const reps = [
+    {name: 'Tani（120社）', actual: 1450},
+    {name: 'Niidoi（80社）', actual: 1066}
+  ];
+  new Chart(document.getElementById('chartSalesReps'), {
+    type: 'bar',
+    data: {
+      labels: reps.map(r => r.name),
+      datasets: [{
+        label: '実績',
+        data: reps.map(r => r.actual),
+        backgroundColor: reps.map(r => r.actual >= target ? '#059669' : '#2563eb'),
+        borderRadius: 6,
+        barPercentage: 0.5
+      },{
+        label: '残り',
+        data: reps.map(r => Math.max(0, target - r.actual)),
+        backgroundColor: '#e2e8f0',
+        borderRadius: 6,
+        barPercentage: 0.5
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {display: true, position:'bottom', labels:{boxWidth:12,usePointStyle:true,padding:16}},
+        tooltip: {callbacks: {label: ctx => ctx.dataset.label + ': ¥' + ctx.raw.toLocaleString() + '万'}},
+        annotation: {annotations: {target: {type:'line',xMin:target,xMax:target,borderColor:'#b8860b',borderWidth:2,borderDash:[6,4],label:{display:true,content:'目標 ¥'+target.toLocaleString()+'万',position:'start',font:{size:11},color:'#b8860b',backgroundColor:'rgba(255,255,255,.9)'}}}}
+      },
+      scales: {
+        x:{stacked:true,max:target*1.1,grid:{color:'#f1f5f9'},ticks:{callback:v=>'¥'+v.toLocaleString()+'万'}},
+        y:{stacked:true,grid:{display:false}}
+      }
+    }
+  });
+})();
 
 // ===== MONTHLY TREND (replaces budget progress) =====
 (function(){
