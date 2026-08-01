@@ -544,7 +544,7 @@ function updateKPIs(){
   const applies = Math.round(baseApplies * factor);
   const cpa = applies > 0 ? Math.round(spend / applies) : 0;
   
-  const fmt = v => v >= 10000000 ? '¥' + (v/10000000).toFixed(2) + '億' : v >= 10000 ? '¥' + Math.round(v/10000).toLocaleString() + '万' : '¥' + v.toLocaleString();
+  const fmt = v => v >= 100000000 ? '¥' + (v/100000000).toFixed(2) + '億' : v >= 10000 ? '¥' + Math.round(v/10000).toLocaleString() + '万' : '¥' + v.toLocaleString();
   
   document.getElementById('kpiGrid').innerHTML = `
     <div class="kpi-card">
